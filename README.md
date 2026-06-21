@@ -189,7 +189,7 @@ dengan pendekatan **gamifikasi pembelajaran**.
 
 # 📸 Preview
 
-![preview](preview.png)
+![preview]([preview.png](https://blogger.googleusercontent.com/img/a/AVvXsEityLtNTGTSfiTdfEQ2FF4GCMihBVy-XqqGsARo1zqIQe3DIBgXl13PyRdqvTsZIBBzQhI7PcASk8XXNAUkuK4m8d7Vt6VF4lYzsihbZUKViCC_vRH6_Rx4p4109hyoFjaxQgSjB7FeQPG6QGYutn7GVRG_jXJWMmYvf8yAgKFdi96OGZZ_-j-3eT6H-86o=rw))
 
 ---
 
