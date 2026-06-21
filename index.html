@@ -117,7 +117,8 @@
   <div class="scanlines"></div>
   <header class="p-2 md:p-3 bg-black/80 border-b-2 border-slate-700/50 z-[60] flex justify-between items-center backdrop-blur-md relative shrink-0">
    <div class="flex items-center gap-3">
-    <div class="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-800 rounded flex items-center justify-center border border-amber-400/50"><i class="fa-solid fa-hourglass-half text-white text-sm"></i>
+    <div class="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-800 rounded flex items-center justify-center border border-amber-400/50">
+     <i class="fa-solid fa-hourglass-half text-white text-sm"></i>
     </div>
     <div>
      <h1 data-template-id="page-title" class="canva-text font-['Press_Start_2P'] text-[9px] md:text-[10px] text-white tracking-wide"></h1>
@@ -126,7 +127,8 @@
    </div>
    <div class="flex items-center gap-2"><button id="music-toggle" class="w-8 h-8 flex items-center justify-center rounded bg-slate-800/80 border border-slate-700/50 text-amber-400 text-sm" onclick="engine.toggleMusic()"><i class="fa-solid fa-volume-high"></i></button>
     <div id="status-panel" class="hidden items-center gap-3 md:gap-6 bg-slate-900/80 px-3 py-1.5 rounded border border-slate-700/50">
-     <div class="flex flex-col items-end"><span class="text-[10px] text-slate-500 mb-0.5">ENERGI</span>
+     <div class="flex flex-col items-end">
+      <span class="text-[10px] text-slate-500 mb-0.5">ENERGI</span>
       <div class="flex gap-2 items-center">
        <div class="w-20 md:w-28 h-2.5 bg-black rounded-full overflow-hidden border border-slate-700/50">
         <div id="hp-bar" class="h-full bg-emerald-500 transition-all duration-500 rounded-full hp-glow" style="width:100%"></div>
@@ -149,7 +151,7 @@
   </header>
   <main class="flex-1 relative overflow-hidden bg-black flex flex-col"><!-- MAIN MENU -->
    <div id="scene-menu" class="absolute inset-0 z-40 flex flex-col items-center justify-center text-center transition-opacity duration-700">
-    <div class="absolute inset-0 overflow-hidden"><img data-template-id="hero-bg-img" class="canva-image w-full h-full object-cover opacity-40 scale-110 blur-[1px]" loading="lazy">
+    <div class="absolute inset-0 overflow-hidden"><img data-template-id="hero-bg-img" src="https://images.pexels.com/photos/6476717/pexels-photo-6476717.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920" alt="Stunning foggy landscape view of Borobudur Temple" class="canva-image w-full h-full object-cover opacity-40 scale-110 blur-[1px]" loading="lazy">
      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
     </div>
     <div class="vignette"></div>
@@ -167,23 +169,25 @@
    </div><!-- VN SCENE -->
    <div id="scene-vn" class="absolute inset-0 z-20 hidden flex-col bg-black">
     <div id="parallax-container" class="absolute inset-0 overflow-hidden">
-     <div id="parallax-layer" class="parallax-bg"><img id="vn-bg-img-0" data-template-id="bg-sriwijaya-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="vn-bg-img-1" data-template-id="bg-diponegoro-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="vn-bg-img-2" data-template-id="bg-proklamasi-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy">
+     <div id="parallax-layer" class="parallax-bg"><img id="vn-bg-img-0" data-template-id="bg-sriwijaya-img" src="https://images.pexels.com/photos/35171565/pexels-photo-35171565.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920" alt="Traditional wooden boats docked at sunset" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="vn-bg-img-1" data-template-id="bg-diponegoro-img" src="https://images.pexels.com/photos/4581193/pexels-photo-4581193.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920" alt="Two figures illuminate a cavern with a red flare" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="vn-bg-img-2" data-template-id="bg-proklamasi-img" src="https://images.pexels.com/photos/18048414/pexels-photo-18048414.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1920" alt="A dimly lit vintage room with lamp and wooden furniture" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy">
      </div>
      <div class="vignette"></div>
      <div id="atmo-overlay" class="absolute inset-0 pointer-events-none transition-opacity duration-1000"></div>
     </div>
     <div id="vn-particles" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
     <div class="absolute bottom-44 md:bottom-52 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0 w-48 h-60 md:w-56 md:h-72 z-30 pointer-events-none">
-     <div id="npc-portrait" class="npc-portrait w-full h-full opacity-0 translate-y-8 rounded-xl overflow-hidden"><img id="npc-img-0" data-template-id="npc-monk-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="npc-img-1" data-template-id="npc-warrior-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="npc-img-2" data-template-id="npc-diplomat-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy">
+     <div id="npc-portrait" class="npc-portrait w-full h-full opacity-0 translate-y-8 rounded-xl overflow-hidden"><img id="npc-img-0" data-template-id="npc-monk-img" src="https://images.pexels.com/photos/10930506/pexels-photo-10930506.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="A Buddhist monk in a red robe at ancient temple steps" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="npc-img-1" data-template-id="npc-warrior-img" src="https://images.pexels.com/photos/13305543/pexels-photo-13305543.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Man in traditional Malay attire holding a dagger" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="npc-img-2" data-template-id="npc-diplomat-img" src="https://images.pexels.com/photos/19542474/pexels-photo-19542474.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=800" alt="Classically dressed man in a dark suit and hat" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy">
      </div>
     </div>
     <div class="absolute top-3 right-3 z-40">
-     <div class="bg-black/70 border border-amber-500/30 px-3 py-2 rounded-lg backdrop-blur-sm"><span class="font-['Press_Start_2P'] text-[7px] text-amber-400/70 block mb-0.5">ERA</span> <span id="vn-era-text" class="text-base md:text-lg text-white">-</span>
+     <div class="bg-black/70 border border-amber-500/30 px-3 py-2 rounded-lg backdrop-blur-sm">
+      <span class="font-['Press_Start_2P'] text-[7px] text-amber-400/70 block mb-0.5">ERA</span><span id="vn-era-text" class="text-base md:text-lg text-white">-</span>
      </div>
     </div>
     <div class="absolute bottom-0 w-full p-2 md:p-4 z-40">
      <div class="max-w-4xl mx-auto w-full relative">
-      <div id="vn-name-plate" class="vn-name-plate absolute -top-4 left-4 md:left-6 px-4 py-1 z-50"><span id="vn-name" class="font-['Press_Start_2P'] text-[8px] md:text-[10px] text-white tracking-wider">NPC</span>
+      <div id="vn-name-plate" class="vn-name-plate absolute -top-4 left-4 md:left-6 px-4 py-1 z-50">
+       <span id="vn-name" class="font-['Press_Start_2P'] text-[8px] md:text-[10px] text-white tracking-wider">NPC</span>
       </div>
       <div id="vn-dialog-box" class="vn-dialog-box w-full min-h-[130px] md:min-h-[150px] p-4 md:p-6 pt-7 md:pt-8 flex flex-col justify-between cursor-pointer" onclick="engine.nextDialog()">
        <p id="vn-text" class="text-xl md:text-2xl text-slate-100 leading-relaxed tracking-wide"></p>
@@ -201,7 +205,8 @@
     <div class="relative z-10 flex flex-col items-center max-w-md w-full">
      <h2 id="end-title" data-template-id="end-title-text" class="canva-text font-['Press_Start_2P'] text-xl md:text-3xl text-white mb-6 leading-relaxed"></h2>
      <div class="vn-dialog-box p-6 w-full mb-6">
-      <div class="flex flex-col items-center mb-4 border-b border-slate-700/50 pb-4"><span class="text-base text-slate-500 mb-1">SISA ENERGI</span> <span id="end-hp" class="font-['Press_Start_2P'] text-3xl text-emerald-400">100</span>
+      <div class="flex flex-col items-center mb-4 border-b border-slate-700/50 pb-4">
+       <span class="text-base text-slate-500 mb-1">SISA ENERGI</span><span id="end-hp" class="font-['Press_Start_2P'] text-3xl text-emerald-400">100</span>
       </div><span class="text-base text-slate-500 mb-3 block">ARTIFAK</span>
       <div id="end-artifacts" class="flex justify-center gap-4 mb-4"></div>
       <p id="end-msg" data-template-id="end-msg-text" class="canva-text text-lg leading-relaxed text-amber-200 bg-black/40 p-3 rounded border border-amber-600/20"></p>
@@ -211,7 +216,6 @@
   </main>
   <script src="/_sdk/editing_sdk.js"></script>
   <script>
-        // --- AUDIO ENGINE ---
         const audio = {
             ctx: null, musicGain: null, sfxGain: null, musicPlaying: false, muted: false, musicNodes: [],
             init() {
@@ -265,7 +269,6 @@
             }
         };
 
-        // --- STORY DATA (MAXIMIZED QUESTIONS) ---
         const vnData = [
             {
                 id:"ch1", bgIdx:0, npcIdx:0, eraText:"Selat Malaka, Abad ke-8",
@@ -469,7 +472,6 @@
             }
         ];
 
-        // --- ENGINE ---
         const engine = {
             state: { chapterIdx:0, nodeIdx:0, hp:100, artifacts:[], isTyping:false, currentInterval:null, waitingForClick:false },
 
@@ -759,7 +761,6 @@
             }
         };
 
-        // Parallax
         document.addEventListener('mousemove',e=>{
             const x=(e.clientX/window.innerWidth-0.5)*20;
             const y=(e.clientY/window.innerHeight-0.5)*15;
@@ -767,5 +768,5 @@
             if(l)l.style.transform=`translate(${x}px,${y}px) scale(1.08)`;
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f15f7241f77a69',t:'MTc4MjAyNzcwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f22f58a20b4f97',t:'MTc4MjAzNjIyMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
