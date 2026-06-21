@@ -213,9 +213,15 @@ MIT License
 
 ---
 
-# 👨‍🏫 Author
+# 👨‍🏫 Author & Credits
 
 Dikembangkan sebagai media pembelajaran sejarah Indonesia berbasis gamifikasi.
+
+**Creator:** [@kangtoer](https://github.com/kangtoer)
+
+**Purpose:** Educational resource for social science educators and students to learn Indonesian history through interactive gamified experience.
+
+**Target Audience:** Students, educators, and history enthusiasts interested in Indonesian cultural heritage.
 
 Semoga bermanfaat bagi guru, siswa, dan pecinta sejarah Nusantara.
 
