@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="id">
+ <head><script src="/_sdk/telemetry_sdk.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kapsul Waktu: Nusantara Chronicles</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+        :root { --vh: 1vh; }
+        body { font-family: 'VT323', monospace; overflow: hidden; touch-action: none; user-select: none; -webkit-tap-highlight-color: transparent; }
+
+        .vn-dialog-box {
+            background: linear-gradient(135deg, rgba(10, 20, 60, 0.92) 0%, rgba(5, 5, 20, 0.95) 100%);
+            border: 3px solid #eab308;
+            border-radius: 12px;
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 8px 40px rgba(0,0,0,0.7);
+            position: relative;
+            backdrop-filter: blur(8px);
+        }
+        .vn-dialog-box::after {
+            content: ''; position: absolute; inset: 3px;
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 9px; pointer-events: none;
+        }
+
+        .vn-name-plate {
+            background: linear-gradient(to right, #92400e, #451a03);
+            border: 2px solid #fde047; border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+        }
+
+        .scanlines {
+            position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px);
+            mix-blend-mode: overlay;
+        }
+
+        .vignette {
+            position: absolute; inset: 0; pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .parallax-bg {
+            position: absolute; inset: -40px;
+            transition: transform 0.3s ease-out;
+            will-change: transform;
+        }
+
+        .npc-portrait {
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
+        }
+        .npc-portrait img {
+            width: 100%; height: 100%; object-fit: cover;
+            mask-image: linear-gradient(to top, transparent 0%, black 30%);
+            -webkit-mask-image: linear-gradient(to top, transparent 0%, black 30%);
+        }
+
+        .particle {
+            position: absolute; border-radius: 50%; pointer-events: none;
+            animation: particleFloat linear infinite;
+        }
+        @keyframes particleFloat {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+        }
+
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-8px) rotate(-0.5deg); } 75% { transform: translateX(8px) rotate(0.5deg); } }
+        .animate-shake { animation: shake 0.4s ease-in-out; }
+
+        .blinking-cursor::after { content: ' ▼'; animation: blink 1s step-end infinite; color: #fde047; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .choice-btn {
+            transition: all 0.2s;
+            border: 2px solid rgba(100,116,139,0.6);
+            background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));
+            backdrop-filter: blur(4px);
+        }
+        .choice-btn:hover { border-color: #eab308; transform: translateX(8px); background: linear-gradient(135deg, rgba(30,41,59,0.95), rgba(51,65,85,0.95)); }
+        .choice-btn.selected { border-color: #22c55e; background: linear-gradient(135deg, rgba(20,83,45,0.8), rgba(30,41,59,0.9)); }
+
+        .hp-glow { box-shadow: 0 0 8px currentColor; }
+
+        .order-item {
+            transition: all 0.2s;
+            border: 2px solid rgba(100,116,139,0.6);
+            background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));
+            cursor: grab; touch-action: none;
+        }
+        .order-item:active { cursor: grabbing; }
+        .order-item.dragging { opacity: 0.5; border-color: #eab308; }
+
+        .match-left, .match-right {
+            border: 2px solid rgba(100,116,139,0.6);
+            background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));
+            transition: all 0.2s; cursor: pointer;
+        }
+        .match-left.active, .match-right.active { border-color: #eab308; }
+        .match-left.matched, .match-right.matched { border-color: #22c55e; opacity: 0.6; pointer-events: none; }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #1e40af, #1d4ed8);
+            border: 2px solid #60a5fa;
+            transition: all 0.2s;
+        }
+        .submit-btn:hover { background: linear-gradient(135deg, #1d4ed8, #2563eb); }
+    </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ </head>
+ <body data-template-id="__page-root" class="h-screen w-screen flex flex-col relative bg-black">
+  <div class="scanlines"></div>
+  <header class="p-2 md:p-3 bg-black/80 border-b-2 border-slate-700/50 z-[60] flex justify-between items-center backdrop-blur-md relative shrink-0">
+   <div class="flex items-center gap-3">
+    <div class="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-800 rounded flex items-center justify-center border border-amber-400/50">
+     <i class="fa-solid fa-hourglass-half text-white text-sm"></i>
+    </div>
+    <div>
+     <h1 data-template-id="page-title" class="canva-text font-['Press_Start_2P'] text-[9px] md:text-[10px] text-white tracking-wide"></h1>
+     <p class="text-[11px] text-amber-400/70 mt-0.5 tracking-widest">v4.0 IMMERSIVE</p>
+    </div>
+   </div>
+   <div class="flex items-center gap-2"><button id="music-toggle" class="w-8 h-8 flex items-center justify-center rounded bg-slate-800/80 border border-slate-700/50 text-amber-400 text-sm" onclick="engine.toggleMusic()"><i class="fa-solid fa-volume-high"></i></button>
+    <div id="status-panel" class="hidden items-center gap-3 md:gap-6 bg-slate-900/80 px-3 py-1.5 rounded border border-slate-700/50">
+     <div class="flex flex-col items-end">
+      <span class="text-[10px] text-slate-500 mb-0.5">ENERGI</span>
+      <div class="flex gap-2 items-center">
+       <div class="w-20 md:w-28 h-2.5 bg-black rounded-full overflow-hidden border border-slate-700/50">
+        <div id="hp-bar" class="h-full bg-emerald-500 transition-all duration-500 rounded-full hp-glow" style="width:100%"></div>
+       </div><span id="hp-text" class="text-sm text-emerald-400 font-bold w-7 text-right">100</span>
+      </div>
+     </div>
+     <div class="flex gap-1.5">
+      <div id="art-0" class="w-7 h-7 rounded bg-slate-800/80 flex items-center justify-center text-slate-600 text-[10px] border border-slate-700/30">
+       <i class="fa-solid fa-lock"></i>
+      </div>
+      <div id="art-1" class="w-7 h-7 rounded bg-slate-800/80 flex items-center justify-center text-slate-600 text-[10px] border border-slate-700/30">
+       <i class="fa-solid fa-lock"></i>
+      </div>
+      <div id="art-2" class="w-7 h-7 rounded bg-slate-800/80 flex items-center justify-center text-slate-600 text-[10px] border border-slate-700/30">
+       <i class="fa-solid fa-lock"></i>
+      </div>
+     </div>
+    </div>
+   </div>
+  </header>
+  <main class="flex-1 relative overflow-hidden bg-black flex flex-col"><!-- MAIN MENU -->
+   <div id="scene-menu" class="absolute inset-0 z-40 flex flex-col items-center justify-center text-center transition-opacity duration-700">
+    <div class="absolute inset-0 overflow-hidden">
+     <img data-template-id="hero-bg-img" class="canva-image w-full h-full object-cover opacity-40 scale-110 blur-[1px]" loading="lazy">
+     <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
+    </div>
+    <div class="vignette"></div>
+    <div class="relative z-10 flex flex-col items-center px-6 max-w-lg w-full">
+     <div class="mb-2 text-amber-400/60 text-5xl">
+      <i class="fa-solid fa-hourglass-half"></i>
+     </div>
+     <h1 class="font-['Press_Start_2P'] text-xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-b from-amber-200 to-amber-500 mb-1 leading-relaxed tracking-wider">KAPSUL WAKTU</h1>
+     <h2 data-template-id="page-subtitle" class="canva-text font-['Press_Start_2P'] text-[9px] md:text-xs text-slate-300 mb-8 tracking-widest"></h2>
+     <div class="vn-dialog-box p-5 md:p-6 mb-6 w-full">
+      <p class="text-lg md:text-xl text-slate-300 leading-relaxed text-left">Sistem temporal diaktifkan. Tugas Anda: melompat ke tiga era krusial Nusantara, menghadapi tokoh sejarah, dan mengumpulkan artifak.<br><br>
+       Mode soal bervariasi: pilihan ganda, pilihan ganda kompleks, menjodohkan, dan mengurutkan.<br><br><span class="text-red-400">⚠ Jika energi habis, Anda terjebak selamanya.</span></p>
+     </div><button data-template-id="start-button" onclick="engine.startGame()" class="canva-button w-full font-['Press_Start_2P'] text-xs md:text-sm py-4 rounded-lg shadow-lg hover:brightness-110 active:translate-y-1 transition-all border border-amber-400/30"></button>
+    </div>
+   </div><!-- VN SCENE -->
+   <div id="scene-vn" class="absolute inset-0 z-20 hidden flex-col bg-black">
+    <div id="parallax-container" class="absolute inset-0 overflow-hidden">
+     <div id="parallax-layer" class="parallax-bg"><img id="vn-bg-img-0" data-template-id="bg-sriwijaya-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="vn-bg-img-1" data-template-id="bg-diponegoro-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="vn-bg-img-2" data-template-id="bg-proklamasi-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy">
+     </div>
+     <div class="vignette"></div>
+     <div id="atmo-overlay" class="absolute inset-0 pointer-events-none transition-opacity duration-1000"></div>
+    </div>
+    <div id="vn-particles" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+    <div class="absolute bottom-44 md:bottom-52 left-1/2 -translate-x-1/2 md:left-16 md:translate-x-0 w-48 h-60 md:w-56 md:h-72 z-30 pointer-events-none">
+     <div id="npc-portrait" class="npc-portrait w-full h-full opacity-0 translate-y-8 rounded-xl overflow-hidden"><img id="npc-img-0" data-template-id="npc-monk-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="npc-img-1" data-template-id="npc-warrior-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy"> <img id="npc-img-2" data-template-id="npc-diplomat-img" class="canva-image absolute inset-0 w-full h-full object-cover hidden" loading="lazy">
+     </div>
+    </div>
+    <div class="absolute top-3 right-3 z-40">
+     <div class="bg-black/70 border border-amber-500/30 px-3 py-2 rounded-lg backdrop-blur-sm">
+      <span class="font-['Press_Start_2P'] text-[7px] text-amber-400/70 block mb-0.5">ERA</span><span id="vn-era-text" class="text-base md:text-lg text-white">-</span>
+     </div>
+    </div>
+    <div class="absolute bottom-0 w-full p-2 md:p-4 z-40">
+     <div class="max-w-4xl mx-auto w-full relative">
+      <div id="vn-name-plate" class="vn-name-plate absolute -top-4 left-4 md:left-6 px-4 py-1 z-50">
+       <span id="vn-name" class="font-['Press_Start_2P'] text-[8px] md:text-[10px] text-white tracking-wider">NPC</span>
+      </div>
+      <div id="vn-dialog-box" class="vn-dialog-box w-full min-h-[130px] md:min-h-[150px] p-4 md:p-6 pt-7 md:pt-8 flex flex-col justify-between cursor-pointer" onclick="engine.nextDialog()">
+       <p id="vn-text" class="text-xl md:text-2xl text-slate-100 leading-relaxed tracking-wide"></p>
+       <div id="vn-continue-icon" class="self-end mt-1 text-amber-400 animate-bounce hidden">
+        <i class="fa-solid fa-caret-down text-xl"></i>
+       </div>
+      </div>
+      <div id="vn-choices" class="absolute bottom-full left-0 w-full p-3 flex-col gap-2.5 hidden z-50 max-h-[50vh] overflow-y-auto pb-6"></div>
+     </div>
+    </div>
+    <div id="damage-overlay" class="absolute inset-0 pointer-events-none z-[100] transition-all duration-200" style="background:transparent;"></div>
+   </div><!-- END SCENE -->
+   <div id="scene-end" class="absolute inset-0 z-[70] bg-black hidden flex-col items-center justify-center p-6 text-center">
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-900 to-black"></div>
+    <div class="relative z-10 flex flex-col items-center max-w-md w-full">
+     <h2 id="end-title" data-template-id="end-title-text" class="canva-text font-['Press_Start_2P'] text-xl md:text-3xl text-white mb-6 leading-relaxed"></h2>
+     <div class="vn-dialog-box p-6 w-full mb-6">
+      <div class="flex flex-col items-center mb-4 border-b border-slate-700/50 pb-4">
+       <span class="text-base text-slate-500 mb-1">SISA ENERGI</span><span id="end-hp" class="font-['Press_Start_2P'] text-3xl text-emerald-400">100</span>
+      </div><span class="text-base text-slate-500 mb-3 block">ARTIFAK</span>
+      <div id="end-artifacts" class="flex justify-center gap-4 mb-4"></div>
+      <p id="end-msg" data-template-id="end-msg-text" class="canva-text text-lg leading-relaxed text-amber-200 bg-black/40 p-3 rounded border border-amber-600/20"></p>
+     </div><button onclick="location.reload()" class="font-['Press_Start_2P'] text-[10px] bg-slate-800 text-white px-6 py-3 rounded hover:bg-slate-700 transition-all border border-slate-600">KEMBALI KE MENU</button>
+    </div>
+   </div>
+  </main>
+  <script src="/_sdk/editing_sdk.js"></script>
+  <script>
+        // --- AUDIO ENGINE (Web Audio API - no Tone.js) ---
+        const audio = {
+            ctx: null,
+            musicGain: null,
+            sfxGain: null,
+            musicPlaying: false,
+            muted: false,
+            musicNodes: [],
+
+            init() {
+                if (this.ctx) return;
+                this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+                this.musicGain = this.ctx.createGain();
+                this.musicGain.gain.value = 0.12;
+                this.musicGain.connect(this.ctx.destination);
+                this.sfxGain = this.ctx.createGain();
+                this.sfxGain.gain.value = 0.15;
+                this.sfxGain.connect(this.ctx.destination);
+            },
+
+            // Gamelan-inspired pentatonic background music
+            startMusic() {
+                if (this.musicPlaying) return;
+                this.musicPlaying = true;
+                // Pelog-like scale frequencies
+                const scale = [261.6, 293.7, 327.0, 392.0, 440.0, 523.3, 587.3, 654.0];
+                const playNote = () => {
+                    if (!this.musicPlaying || this.muted) {
+                        setTimeout(playNote, 800);
+                        return;
+                    }
+                    const freq = scale[Math.floor(Math.random() * scale.length)];
+                    const osc = this.ctx.createOscillator();
+                    const gain = this.ctx.createGain();
+                    // Use sine wave for soft gamelan bell tone
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0, this.ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.3, this.ctx.currentTime + 0.05);
+                    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 1.8);
+                    osc.connect(gain);
+                    gain.connect(this.musicGain);
+                    osc.start();
+                    osc.stop(this.ctx.currentTime + 2);
+                    // Occasional harmony
+                    if (Math.random() > 0.6) {
+                        const osc2 = this.ctx.createOscillator();
+                        const gain2 = this.ctx.createGain();
+                        osc2.type = 'sine';
+                        osc2.frequency.value = freq * 1.5;
+                        gain2.gain.setValueAtTime(0, this.ctx.currentTime);
+                        gain2.gain.linearRampToValueAtTime(0.1, this.ctx.currentTime + 0.1);
+                        gain2.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 1.5);
+                        osc2.connect(gain2);
+                        gain2.connect(this.musicGain);
+                        osc2.start(this.ctx.currentTime + 0.1);
+                        osc2.stop(this.ctx.currentTime + 1.8);
+                    }
+                    const delay = 600 + Math.random() * 1200;
+                    setTimeout(playNote, delay);
+                };
+                playNote();
+                // Low drone
+                const drone = this.ctx.createOscillator();
+                const droneGain = this.ctx.createGain();
+                drone.type = 'sine';
+                drone.frequency.value = 130.8;
+                droneGain.gain.value = 0.06;
+                drone.connect(droneGain);
+                droneGain.connect(this.musicGain);
+                drone.start();
+                this.musicNodes.push({ osc: drone, gain: droneGain });
+            },
+
+            stopMusic() {
+                this.musicPlaying = false;
+                this.musicNodes.forEach(n => { try { n.osc.stop(); } catch(e){} });
+                this.musicNodes = [];
+            },
+
+            toggleMute() {
+                this.muted = !this.muted;
+                if (this.musicGain) this.musicGain.gain.value = this.muted ? 0 : 0.12;
+                if (this.sfxGain) this.sfxGain.gain.value = this.muted ? 0 : 0.15;
+                document.querySelector('#music-toggle i').className = this.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
+            },
+
+            playSfx(type) {
+                if (!this.ctx || this.muted) return;
+                const now = this.ctx.currentTime;
+                if (type === 'click') {
+                    const osc = this.ctx.createOscillator();
+                    const g = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 800;
+                    g.gain.setValueAtTime(0.2, now);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                    osc.connect(g); g.connect(this.sfxGain);
+                    osc.start(); osc.stop(now + 0.1);
+                } else if (type === 'correct') {
+                    [523, 659, 784].forEach((f, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const g = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = f;
+                        g.gain.setValueAtTime(0, now + i * 0.1);
+                        g.gain.linearRampToValueAtTime(0.25, now + i * 0.1 + 0.02);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.4);
+                        osc.connect(g); g.connect(this.sfxGain);
+                        osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.5);
+                    });
+                } else if (type === 'wrong') {
+                    const osc = this.ctx.createOscillator();
+                    const g = this.ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 180;
+                    g.gain.setValueAtTime(0.2, now);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+                    osc.connect(g); g.connect(this.sfxGain);
+                    osc.start(); osc.stop(now + 0.35);
+                } else if (type === 'reward') {
+                    [659, 784, 988, 1175].forEach((f, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const g = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = f;
+                        g.gain.setValueAtTime(0, now + i * 0.12);
+                        g.gain.linearRampToValueAtTime(0.2, now + i * 0.12 + 0.03);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.6);
+                        osc.connect(g); g.connect(this.sfxGain);
+                        osc.start(now + i * 0.12); osc.stop(now + i * 0.12 + 0.7);
+                    });
+                } else if (type === 'start') {
+                    [392, 523, 659].forEach((f, i) => {
+                        const osc = this.ctx.createOscillator();
+                        const g = this.ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = f;
+                        g.gain.setValueAtTime(0, now + i * 0.15);
+                        g.gain.linearRampToValueAtTime(0.25, now + i * 0.15 + 0.03);
+                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.5);
+                        osc.connect(g); g.connect(this.sfxGain);
+                        osc.start(now + i * 0.15); osc.stop(now + i * 0.15 + 0.6);
+                    });
+                }
+            }
+        };
+
+        // --- STORY DATA ---
+        const vnData = [
+            {
+                id:"ch1", bgIdx:0, npcIdx:0, eraText:"Selat Malaka, Abad ke-8",
+                npcName:"Biksu I-Tsing", particleColor:"rgba(253,224,71,0.6)", atmoStyle:"background:linear-gradient(to top,rgba(234,179,8,0.1),transparent 60%)",
+                nodes:[
+                    {type:'dialog',text:"Pengembara, kau muncul dari udara kosong. Jubahmu aneh, tapi auramu tidak berniat jahat."},
+                    {type:'dialog',text:"Aku I-Tsing. Aku singgah di Fo-Shih (Sriwijaya) untuk menerjemahkan naskah Buddha sebelum ke India."},
+                    {type:'dialog',text:"Lihatlah bandar ini. Ribuan kapal berlabuh. Tahukah kau mengapa Sriwijaya bisa semegah ini?"},
+                    {type:'question',mode:'single',text:"Mengapa Sriwijaya menjadi kerajaan maritim terbesar?",options:[
+                        {text:"Teknologi mesin uap canggih",correct:false,response:"Mesin uap? Di abad ke-8? Fokuslah!"},
+                        {text:"Lokasi strategis di Selat Malaka",correct:true,response:"Tepat. Selat Malaka adalah urat nadi dunia."},
+                        {text:"Luas daratan yang sangat besar",correct:false,response:"Mereka penguasa lautan, bukan benua."}
+                    ]},
+                    {type:'dialog',text:"Sriwijaya memonopoli komoditas berharga dari seluruh kepulauan ini."},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA komoditas utama Sriwijaya:",options:[
+                        {text:"Rempah-rempah",correct:true},
+                        {text:"Kapur barus",correct:true},
+                        {text:"Emas",correct:true},
+                        {text:"Baja industri",correct:false},
+                        {text:"Kain wool",correct:false}
+                    ],responseCorrect:"Benar! Tiga komoditas itu adalah emas hijau yang diburu pedagang!",responseWrong:"Perhatikan lagi. Komoditas abad ke-8 bukan industri modern."},
+                    {type:'dialog',text:"Prasasti Kedukan Bukit mencatat perjalanan suci Dapunta Hyang."},
+                    {type:'question',mode:'order',text:"Urutkan tahapan ekspansi Sriwijaya:",items:[
+                        {text:"Dapunta Hyang berangkat dengan 20.000 prajurit",order:1},
+                        {text:"Menaklukkan wilayah sekitar Musi",order:2},
+                        {text:"Mendirikan wanua (negeri) baru",order:3},
+                        {text:"Menguasai jalur perdagangan selat",order:4}
+                    ],responseCorrect:"Sempurna! Kau memahami kronologi ekspansi Sriwijaya.",responseWrong:"Urutannya belum tepat. Pelajari lagi Prasasti Kedukan Bukit."},
+                    {type:'question',mode:'match',text:"Jodohkan istilah Sriwijaya dengan artinya:",pairs:[
+                        {left:"Fo-Shih",right:"Nama Tiongkok untuk Sriwijaya"},
+                        {left:"Kedukan Bukit",right:"Prasasti tertua Sriwijaya"},
+                        {left:"Minanga Tamwan",right:"Pertemuan dua sungai"}
+                    ],responseCorrect:"Sempurna! Kau menguasai terminologi Sriwijaya.",responseWrong:"Ada yang belum cocok. Perhatikan konteks setiap istilah."},
+                    {type:'dialog',text:"Kau layak melangkah lebih jauh. Terimalah miniatur kapal Jong ini."},
+                    {type:'reward',artifact:{icon:"fa-ship",name:"Miniatur Jong",color:"text-sky-400"}}
+                ]
+            },
+            {
+                id:"ch2", bgIdx:1, npcIdx:1, eraText:"Gua Selarong, 1825",
+                npcName:"P. Diponegoro", particleColor:"rgba(34,197,94,0.5)", atmoStyle:"background:linear-gradient(to top,rgba(0,80,0,0.15),transparent 50%)",
+                nodes:[
+                    {type:'dialog',text:"Berhenti! Siapa kau? Pakaianmu bukan seragam Londo, bukan pula pengikutku."},
+                    {type:'dialog',text:"Datang dari masa depan? Saat ini kami mengatur siasat. Perang besar baru pecah."},
+                    {type:'question',mode:'single',text:"Apa pemicu utama Perang Diponegoro?",options:[
+                        {text:"Kenaikan pajak tanah rakyat",correct:false,response:"Itu penderitaan lama. Ada penghinaan besar lainnya."},
+                        {text:"Patok jalan melintasi makam leluhur",correct:true,response:"Benar! Kehormatan leluhur tak bisa dibeli."},
+                        {text:"Penangkapan kerabat keraton",correct:false,response:"Bukan pemicu utamanya."}
+                    ]},
+                    {type:'dialog',text:"Taktik gerilya kami merepotkan Jenderal De Kock. Namun Londo itu licik."},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA elemen Benteng Stelsel De Kock:",options:[
+                        {text:"Benteng kecil di tiap wilayah",correct:true},
+                        {text:"Jalan penghubung antar benteng",correct:true},
+                        {text:"Pengepungan bertahap",correct:true},
+                        {text:"Serangan udara dengan balon",correct:false},
+                        {text:"Peracunan sumber air",correct:false}
+                    ],responseCorrect:"Benar! Tiga elemen itu mempersempit ruang gerak kami.",responseWrong:"Pikirkan strategi militer abad ke-19, bukan teknologi modern."},
+                    {type:'question',mode:'match',text:"Jodohkan tokoh dengan perannya:",pairs:[
+                        {left:"Sentot Alibasya",right:"Panglima kavaleri andalan"},
+                        {left:"Kiai Mojo",right:"Penasihat spiritual"},
+                        {left:"De Kock",right:"Jenderal Belanda penggagas Stelsel"}
+                    ],responseCorrect:"Tepat! Kau mengenal pemain-pemain kunci perang ini.",responseWrong:"Periksa lagi. Setiap tokoh punya peran spesifik."},
+                    {type:'question',mode:'order',text:"Urutkan fase Perang Diponegoro:",items:[
+                        {text:"Pemasangan patok di Tegalrejo",order:1},
+                        {text:"Diponegoro angkat senjata",order:2},
+                        {text:"Perang gerilya berhasil 3 tahun",order:3},
+                        {text:"Benteng Stelsel diterapkan",order:4},
+                        {text:"Diponegoro ditangkap lewat tipu daya",order:5}
+                    ],responseCorrect:"Sempurna! Kau memahami kronologi perang ini.",responseWrong:"Urutan belum tepat. Ingat alur eskalasi konflik."},
+                    {type:'dialog',text:"Bawalah Keris Kiai Omyang ini. Perlawanan sejati lahir dari rakyat."},
+                    {type:'reward',artifact:{icon:"fa-khanda",name:"Keris Kiai Omyang",color:"text-slate-200"}}
+                ]
+            },
+            {
+                id:"ch3", bgIdx:2, npcIdx:2, eraText:"Jl. Imam Bonjol No.1, 17 Ags 1945",
+                npcName:"Bung Hatta", particleColor:"rgba(251,191,36,0.4)", atmoStyle:"background:linear-gradient(to top,rgba(120,53,15,0.15),transparent 40%)",
+                nodes:[
+                    {type:'dialog',text:"Ssst... jangan berisik. Di luar ada patroli Gunseikanbu. Malam ini sangat krusial."},
+                    {type:'dialog',text:"Kami baru dari Rengasdengklok. Para pemuda sangat berapi-api."},
+                    {type:'question',mode:'single',text:"Apa tujuan peristiwa Rengasdengklok?",options:[
+                        {text:"Mengamankan Soekarno-Hatta agar memproklamasi",correct:true,response:"Benar. Golongan muda takut kami masih menunggu."},
+                        {text:"Menyusun strategi perang lawan Sekutu",correct:false,response:"Jepang sudah menyerah. Fokus kami: merdeka."},
+                        {text:"Menyembunyikan teks proklamasi dari Jepang",correct:false,response:"Teksnya bahkan belum dibuat saat itu!"}
+                    ]},
+                    {type:'dialog',text:"Kini di rumah Laksamana Maeda. Teks harus segera dirumuskan sebelum fajar."},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA tokoh perumus teks Proklamasi:",options:[
+                        {text:"Soekarno",correct:true},
+                        {text:"Hatta",correct:true},
+                        {text:"Achmad Soebardjo",correct:true},
+                        {text:"Sayuti Melik",correct:false},
+                        {text:"Fatmawati",correct:false}
+                    ],responseCorrect:"Benar! Kami bertiga merumuskan di ruang belakang rumah Maeda.",responseWrong:"Sayuti pengetik dan Fatmawati penjahit bendera, bukan perumus teks."},
+                    {type:'question',mode:'order',text:"Urutkan peristiwa menjelang proklamasi:",items:[
+                        {text:"Jepang menyerah tanpa syarat",order:1},
+                        {text:"Pemuda membawa Soekarno-Hatta ke Rengasdengklok",order:2},
+                        {text:"Perumusan teks di rumah Maeda",order:3},
+                        {text:"Sayuti Melik mengetik naskah final",order:4},
+                        {text:"Pembacaan proklamasi di Pegangsaan Timur",order:5}
+                    ],responseCorrect:"Sempurna! Kau memahami detik-detik kemerdekaan.",responseWrong:"Urutan belum tepat. Ingat kronologi 14-17 Agustus 1945."},
+                    {type:'question',mode:'match',text:"Jodohkan tokoh dengan kontribusinya:",pairs:[
+                        {left:"Sayuti Melik",right:"Mengetik naskah proklamasi"},
+                        {left:"Fatmawati",right:"Menjahit bendera Merah Putih"},
+                        {left:"Laksamana Maeda",right:"Menyediakan rumah untuk perumusan"},
+                        {left:"Sukarni",right:"Mengusulkan penandatanganan atas nama bangsa"}
+                    ],responseCorrect:"Tepat! Setiap orang punya peran vital malam itu.",responseWrong:"Periksa lagi peran setiap tokoh pada malam 16 Agustus."},
+                    {type:'dialog',text:"Fajar hampir tiba. Bawalah gulungan Proklamasi ini ke masamu. Merdeka!"},
+                    {type:'reward',artifact:{icon:"fa-scroll",name:"Teks Proklamasi",color:"text-amber-200"}}
+                ]
+            }
+        ];
+
+        // --- ENGINE ---
+        const engine = {
+            state: { chapterIdx:0, nodeIdx:0, hp:100, artifacts:[], isTyping:false, currentInterval:null, waitingForClick:false },
+
+            toggleMusic() { audio.toggleMute(); },
+
+            async startGame(){
+                try { audio.init(); audio.startMusic(); } catch(e){}
+                audio.playSfx('start');
+                this.state={chapterIdx:0,nodeIdx:0,hp:100,artifacts:[],isTyping:false,currentInterval:null,waitingForClick:false};
+                this.updateUI();
+                document.getElementById('scene-menu').style.opacity='0';
+                document.getElementById('scene-menu').style.pointerEvents='none';
+                document.getElementById('status-panel').classList.remove('hidden');
+                document.getElementById('status-panel').classList.add('flex');
+                setTimeout(()=>{document.getElementById('scene-menu').classList.add('hidden');this.loadChapter();},600);
+            },
+
+            updateUI(){
+                const hpBar=document.getElementById('hp-bar'),hpText=document.getElementById('hp-text');
+                hpText.innerText=this.state.hp;
+                hpBar.style.width=this.state.hp+'%';
+                if(this.state.hp>50){hpBar.style.background='#22c55e';hpText.style.color='#22c55e';}
+                else if(this.state.hp>20){hpBar.style.background='#eab308';hpText.style.color='#eab308';}
+                else{hpBar.style.background='#ef4444';hpText.style.color='#ef4444';}
+                for(let i=0;i<3;i++){
+                    const s=document.getElementById('art-'+i);
+                    if(this.state.artifacts[i]){s.innerHTML=`<i class="fa-solid ${this.state.artifacts[i].icon} ${this.state.artifacts[i].color} text-sm"></i>`;s.className="w-7 h-7 rounded bg-slate-800/80 flex items-center justify-center border border-amber-500 shadow-[0_0_8px_rgba(234,179,8,0.4)]";}
+                }
+            },
+
+            spawnParticles(color){
+                const c=document.getElementById('vn-particles');c.innerHTML='';
+                for(let i=0;i<20;i++){
+                    const p=document.createElement('div');p.className='particle';
+                    const size=Math.random()*4+2;
+                    p.style.cssText=`width:${size}px;height:${size}px;background:${color};left:${Math.random()*100}%;bottom:${Math.random()*-20}%;animation-duration:${Math.random()*6+4}s;animation-delay:${Math.random()*4}s;`;
+                    c.appendChild(p);
+                }
+            },
+
+            loadChapter(){
+                if(this.state.chapterIdx>=vnData.length){this.gameWin();return;}
+                const ch=vnData[this.state.chapterIdx];
+                this.state.nodeIdx=0;
+                const scene=document.getElementById('scene-vn');
+                scene.classList.remove('hidden');scene.classList.add('flex');
+                for(let i=0;i<3;i++){document.getElementById('vn-bg-img-'+i).classList.add('hidden');document.getElementById('npc-img-'+i).classList.add('hidden');}
+                const bgImg=document.getElementById('vn-bg-img-'+ch.bgIdx);bgImg.classList.remove('hidden');bgImg.style.opacity='0';
+                setTimeout(()=>{bgImg.style.transition='opacity 1.5s';bgImg.style.opacity='1';},50);
+                document.getElementById('atmo-overlay').style.cssText=ch.atmoStyle;
+                document.getElementById('vn-era-text').innerText=ch.eraText;
+                document.getElementById('vn-name').innerText=ch.npcName;
+                const npcP=document.getElementById('npc-portrait');
+                npcP.style.opacity='0';npcP.style.transform='translateY(30px)';
+                document.getElementById('npc-img-'+ch.npcIdx).classList.remove('hidden');
+                setTimeout(()=>{npcP.style.opacity='1';npcP.style.transform='translateY(0)';},500);
+                this.spawnParticles(ch.particleColor);
+                setTimeout(()=>this.processNode(),1200);
+            },
+
+            processNode(){
+                const ch=vnData[this.state.chapterIdx];
+                if(this.state.nodeIdx>=ch.nodes.length){this.endChapter();return;}
+                const node=ch.nodes[this.state.nodeIdx];
+                const choicesBox=document.getElementById('vn-choices'),continueIcon=document.getElementById('vn-continue-icon'),dialogBox=document.getElementById('vn-dialog-box');
+                choicesBox.classList.add('hidden');choicesBox.classList.remove('flex');continueIcon.classList.add('hidden');
+                dialogBox.style.borderColor='#eab308';
+
+                if(node.type==='dialog'){
+                    this.state.waitingForClick=false;
+                    this.typeText(node.text,()=>{this.state.waitingForClick=true;continueIcon.classList.remove('hidden');});
+                } else if(node.type==='question'){
+                    this.state.waitingForClick=false;
+                    dialogBox.style.borderColor='#0ea5e9';
+                    this.typeText(node.text,()=>{ this.renderQuestion(node); });
+                } else if(node.type==='reward'){
+                    audio.playSfx('reward');this.state.artifacts.push(node.artifact);this.updateUI();
+                    dialogBox.style.borderColor='#22c55e';document.getElementById('vn-name').innerText="SISTEM";
+                    const t=`ARTIFAK DIPEROLEH: [ ${node.artifact.name} ]`;
+                    document.getElementById('vn-text').innerHTML=`<span class="text-amber-300">${t}</span><span class="blinking-cursor"></span>`;
+                    this.state.waitingForClick=true;continueIcon.classList.remove('hidden');
+                    setTimeout(()=>{document.getElementById('vn-name').innerText=ch.npcName;},100);
+                }
+            },
+
+            typeText(text,cb){
+                if(this.state.currentInterval)clearInterval(this.state.currentInterval);
+                const tb=document.getElementById('vn-text');tb.innerHTML='';this.state.isTyping=true;
+                let i=0;
+                this.state.currentInterval=setInterval(()=>{
+                    tb.innerHTML=text.substring(0,i)+'<span class="blinking-cursor"></span>';
+                    i++;
+                    if(i>text.length){clearInterval(this.state.currentInterval);this.state.isTyping=false;if(cb)cb();}
+                },28);
+            },
+
+            nextDialog(){
+                if(this.state.isTyping){
+                    clearInterval(this.state.currentInterval);
+                    const node=vnData[this.state.chapterIdx].nodes[this.state.nodeIdx];
+                    if(node.type==='dialog'||node.type==='question')document.getElementById('vn-text').innerHTML=node.text+'<span class="blinking-cursor"></span>';
+                    this.state.isTyping=false;
+                    if(node.type==='dialog'){this.state.waitingForClick=true;document.getElementById('vn-continue-icon').classList.remove('hidden');}
+                    else if(node.type==='question')this.renderQuestion(node);
+                } else if(this.state.waitingForClick){audio.playSfx('click');this.state.nodeIdx++;this.processNode();}
+            },
+
+            renderQuestion(node){
+                const c=document.getElementById('vn-choices');c.innerHTML='';c.classList.remove('hidden');c.classList.add('flex');
+
+                if(node.mode==='single') this.renderSingle(node,c);
+                else if(node.mode==='complex') this.renderComplex(node,c);
+                else if(node.mode==='order') this.renderOrder(node,c);
+                else if(node.mode==='match') this.renderMatch(node,c);
+            },
+
+            renderSingle(node,c){
+                node.options.forEach(opt=>{
+                    const b=document.createElement('button');
+                    b.className='choice-btn w-full text-left text-lg md:text-xl p-3 md:p-4 rounded-lg text-slate-200 flex items-center gap-3';
+                    b.innerHTML=`<span class="text-amber-500 font-bold">►</span><span>${opt.text}</span>`;
+                    b.onclick=(e)=>{e.stopPropagation();c.classList.add('hidden');c.classList.remove('flex');this.handleAnswer(opt.correct,opt.correct?opt.response:opt.response);};
+                    c.appendChild(b);
+                });
+            },
+
+            renderComplex(node,c){
+                const selected=new Set();
+                node.options.forEach((opt,idx)=>{
+                    const b=document.createElement('button');
+                    b.className='choice-btn w-full text-left text-lg md:text-xl p-3 md:p-4 rounded-lg text-slate-200 flex items-center gap-3';
+                    b.innerHTML=`<span class="w-5 h-5 border-2 border-slate-500 rounded flex items-center justify-center text-xs shrink-0"></span><span>${opt.text}</span>`;
+                    b.onclick=(e)=>{
+                        e.stopPropagation();
+                        if(selected.has(idx)){selected.delete(idx);b.classList.remove('selected');b.querySelector('span').innerHTML='';}
+                        else{selected.add(idx);b.classList.add('selected');b.querySelector('span').innerHTML='<i class="fa-solid fa-check text-emerald-400"></i>';}
+                    };
+                    c.appendChild(b);
+                });
+                const submit=document.createElement('button');
+                submit.className='submit-btn w-full text-center text-lg p-3 rounded-lg text-white font-bold mt-2';
+                submit.textContent='KONFIRMASI JAWABAN';
+                submit.onclick=(e)=>{
+                    e.stopPropagation();
+                    const correctIdxs=new Set(node.options.map((o,i)=>o.correct?i:null).filter(x=>x!==null));
+                    const isCorrect=selected.size===correctIdxs.size&&[...selected].every(i=>correctIdxs.has(i));
+                    c.classList.add('hidden');c.classList.remove('flex');
+                    this.handleAnswer(isCorrect, isCorrect?node.responseCorrect:node.responseWrong);
+                };
+                c.appendChild(submit);
+            },
+
+            renderOrder(node,c){
+                let items=[...node.items];
+                // Shuffle
+                for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}
+
+                const list=document.createElement('div');list.className='flex flex-col gap-2 w-full';
+                items.forEach((item,idx)=>{
+                    const el=document.createElement('div');
+                    el.className='order-item w-full text-left text-lg md:text-xl p-3 md:p-4 rounded-lg text-slate-200 flex items-center gap-3';
+                    el.dataset.order=item.order;
+                    el.innerHTML=`<span class="text-amber-500 font-bold shrink-0 w-6">${idx+1}.</span><span>${item.text}</span><span class="ml-auto flex gap-1"><button class="move-up px-2 py-1 bg-slate-700 rounded text-sm">▲</button><button class="move-down px-2 py-1 bg-slate-700 rounded text-sm">▼</button></span>`;
+                    el.querySelector('.move-up').onclick=(e)=>{e.stopPropagation();const prev=el.previousElementSibling;if(prev)list.insertBefore(el,prev);this.updateOrderNumbers(list);};
+                    el.querySelector('.move-down').onclick=(e)=>{e.stopPropagation();const next=el.nextElementSibling;if(next)list.insertBefore(next,el);this.updateOrderNumbers(list);};
+                    list.appendChild(el);
+                });
+                c.appendChild(list);
+
+                const submit=document.createElement('button');
+                submit.className='submit-btn w-full text-center text-lg p-3 rounded-lg text-white font-bold mt-2';
+                submit.textContent='KONFIRMASI URUTAN';
+                submit.onclick=(e)=>{
+                    e.stopPropagation();
+                    const els=[...list.children];
+                    const isCorrect=els.every((el,i)=>parseInt(el.dataset.order)===i+1);
+                    c.classList.add('hidden');c.classList.remove('flex');
+                    this.handleAnswer(isCorrect, isCorrect?node.responseCorrect:node.responseWrong);
+                };
+                c.appendChild(submit);
+            },
+
+            updateOrderNumbers(list){
+                [...list.children].forEach((el,i)=>{el.querySelector('span').textContent=(i+1)+'.';});
+            },
+
+            renderMatch(node,c){
+                const pairs=node.pairs;
+                let shuffledRight=[...pairs].sort(()=>Math.random()-0.5);
+                const matchState={selectedLeft:null,matches:new Map()};
+
+                const grid=document.createElement('div');grid.className='grid grid-cols-2 gap-2 w-full';
+
+                const leftCol=document.createElement('div');leftCol.className='flex flex-col gap-2';
+                const rightCol=document.createElement('div');rightCol.className='flex flex-col gap-2';
+
+                pairs.forEach((p,i)=>{
+                    const lb=document.createElement('button');
+                    lb.className='match-left text-left text-base md:text-lg p-2 md:p-3 rounded-lg text-slate-200';
+                    lb.textContent=p.left;lb.dataset.idx=i;
+                    lb.onclick=(e)=>{
+                        e.stopPropagation();
+                        if(lb.classList.contains('matched'))return;
+                        leftCol.querySelectorAll('.match-left').forEach(x=>x.classList.remove('active'));
+                        lb.classList.add('active');matchState.selectedLeft=i;
+                    };
+                    leftCol.appendChild(lb);
+                });
+
+                shuffledRight.forEach((p,i)=>{
+                    const rb=document.createElement('button');
+                    rb.className='match-right text-left text-base md:text-lg p-2 md:p-3 rounded-lg text-slate-200';
+                    rb.textContent=p.right;rb.dataset.origIdx=pairs.indexOf(p);
+                    rb.onclick=(e)=>{
+                        e.stopPropagation();
+                        if(rb.classList.contains('matched'))return;
+                        if(matchState.selectedLeft===null)return;
+                        const leftIdx=matchState.selectedLeft;
+                        const rightOrigIdx=parseInt(rb.dataset.origIdx);
+                        matchState.matches.set(leftIdx,rightOrigIdx);
+                        // Visual feedback
+                        const lb=leftCol.querySelector(`[data-idx="${leftIdx}"]`);
+                        lb.classList.add('matched');lb.classList.remove('active');
+                        rb.classList.add('matched');
+                        matchState.selectedLeft=null;
+                        // Auto-submit when all matched
+                        if(matchState.matches.size===pairs.length){
+                            setTimeout(()=>{
+                                const isCorrect=[...matchState.matches.entries()].every(([l,r])=>l===r);
+                                c.classList.add('hidden');c.classList.remove('flex');
+                                this.handleAnswer(isCorrect, isCorrect?node.responseCorrect:node.responseWrong);
+                            },400);
+                        }
+                    };
+                    rightCol.appendChild(rb);
+                });
+
+                grid.appendChild(leftCol);grid.appendChild(rightCol);
+                c.appendChild(grid);
+
+                // Manual submit for partial
+                const info=document.createElement('p');info.className='text-sm text-slate-400 mt-2 text-center';info.textContent='Pilih kiri lalu kanan untuk menjodohkan';
+                c.appendChild(info);
+            },
+
+            handleAnswer(correct, response){
+                this.state.waitingForClick=false;
+                const db=document.getElementById('vn-dialog-box'),ci=document.getElementById('vn-continue-icon');
+                if(correct){
+                    audio.playSfx('correct');db.style.borderColor='#22c55e';
+                    this.typeText(response,()=>{this.state.waitingForClick=true;ci.classList.remove('hidden');this.state.nodeIdx++;});
+                } else {
+                    audio.playSfx('wrong');db.style.borderColor='#ef4444';this.takeDamage(20);
+                    if(this.state.hp<=0){this.typeText("Energi habis... Realitas memudar...",()=>{setTimeout(()=>this.gameOver(),1500)});}
+                    else this.typeText(response+" [Energi -20. Klik untuk coba lagi]",()=>{this.state.waitingForClick=true;ci.classList.remove('hidden');});
+                }
+            },
+
+            takeDamage(amt){
+                this.state.hp=Math.max(0,this.state.hp-amt);this.updateUI();
+                const ov=document.getElementById('damage-overlay'),sc=document.getElementById('scene-vn');
+                ov.style.background='rgba(220,38,38,0.35)';sc.classList.add('animate-shake');
+                setTimeout(()=>{ov.style.background='transparent';sc.classList.remove('animate-shake');},400);
+            },
+
+            endChapter(){
+                const bgImg=document.getElementById('vn-bg-img-'+vnData[this.state.chapterIdx].bgIdx);
+                const npcP=document.getElementById('npc-portrait');
+                bgImg.style.opacity='0';npcP.style.opacity='0';npcP.style.transform='translateY(30px)';
+                document.getElementById('vn-particles').innerHTML='';
+                setTimeout(()=>{this.state.chapterIdx++;this.loadChapter();},1200);
+            },
+
+            gameOver(){
+                document.getElementById('scene-end').classList.remove('hidden');document.getElementById('scene-end').classList.add('flex');
+                document.getElementById('status-panel').classList.add('hidden');
+                document.getElementById('end-title').style.color='#ef4444';
+                document.getElementById('end-hp').innerText='0';document.getElementById('end-hp').style.color='#ef4444';
+                document.getElementById('end-msg').innerText='Energi temporal habis. Anda terhapus dari garis waktu...';
+                this.renderEndArtifacts();
+            },
+
+            gameWin(){
+                audio.playSfx('correct');
+                document.getElementById('scene-end').classList.remove('hidden');document.getElementById('scene-end').classList.add('flex');
+                document.getElementById('status-panel').classList.add('hidden');
+                document.getElementById('end-hp').innerText=this.state.hp+'%';
+                const rank=this.state.hp>=80?"LEGENDA WAKTU":this.state.hp>=50?"AHLI SEJARAH":"PENJELAJAH WAKTU";
+                document.getElementById('end-msg').innerText=`Lompatan sukses! Pangkat: ${rank}. Artifak sejarah aman.`;
+                this.renderEndArtifacts();
+            },
+
+            renderEndArtifacts(){
+                const c=document.getElementById('end-artifacts');c.innerHTML='';
+                if(!this.state.artifacts.length){c.innerHTML='<span class="text-slate-500">KOSONG</span>';return;}
+                this.state.artifacts.forEach(a=>{c.innerHTML+=`<div class="w-14 h-14 rounded bg-slate-800 flex items-center justify-center border-2 border-amber-500 shadow-[0_0_12px_rgba(234,179,8,0.4)]"><i class="fa-solid ${a.icon} ${a.color} text-2xl"></i></div>`;});
+            }
+        };
+
+        // Parallax
+        document.addEventListener('mousemove',e=>{
+            const x=(e.clientX/window.innerWidth-0.5)*20;
+            const y=(e.clientY/window.innerHeight-0.5)*15;
+            const l=document.getElementById('parallax-layer');
+            if(l)l.style.transform=`translate(${x}px,${y}px) scale(1.08)`;
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f0e1c6048ae416',t:'MTc4MjAyMjU2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
