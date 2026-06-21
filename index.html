@@ -92,10 +92,7 @@
             transition: all 0.2s;
             border: 2px solid rgba(100,116,139,0.6);
             background: linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.9));
-            cursor: grab; touch-action: none;
         }
-        .order-item:active { cursor: grabbing; }
-        .order-item.dragging { opacity: 0.5; border-color: #eab308; }
 
         .match-left, .match-right {
             border: 2px solid rgba(100,116,139,0.6);
@@ -120,18 +117,16 @@
   <div class="scanlines"></div>
   <header class="p-2 md:p-3 bg-black/80 border-b-2 border-slate-700/50 z-[60] flex justify-between items-center backdrop-blur-md relative shrink-0">
    <div class="flex items-center gap-3">
-    <div class="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-800 rounded flex items-center justify-center border border-amber-400/50">
-     <i class="fa-solid fa-hourglass-half text-white text-sm"></i>
+    <div class="w-9 h-9 bg-gradient-to-br from-amber-500 to-amber-800 rounded flex items-center justify-center border border-amber-400/50"><i class="fa-solid fa-hourglass-half text-white text-sm"></i>
     </div>
     <div>
      <h1 data-template-id="page-title" class="canva-text font-['Press_Start_2P'] text-[9px] md:text-[10px] text-white tracking-wide"></h1>
-     <p class="text-[11px] text-amber-400/70 mt-0.5 tracking-widest">v4.0 IMMERSIVE</p>
+     <p class="text-[11px] text-amber-400/70 mt-0.5 tracking-widest">v5.0 MAX QUESTIONS</p>
     </div>
    </div>
    <div class="flex items-center gap-2"><button id="music-toggle" class="w-8 h-8 flex items-center justify-center rounded bg-slate-800/80 border border-slate-700/50 text-amber-400 text-sm" onclick="engine.toggleMusic()"><i class="fa-solid fa-volume-high"></i></button>
     <div id="status-panel" class="hidden items-center gap-3 md:gap-6 bg-slate-900/80 px-3 py-1.5 rounded border border-slate-700/50">
-     <div class="flex flex-col items-end">
-      <span class="text-[10px] text-slate-500 mb-0.5">ENERGI</span>
+     <div class="flex flex-col items-end"><span class="text-[10px] text-slate-500 mb-0.5">ENERGI</span>
       <div class="flex gap-2 items-center">
        <div class="w-20 md:w-28 h-2.5 bg-black rounded-full overflow-hidden border border-slate-700/50">
         <div id="hp-bar" class="h-full bg-emerald-500 transition-all duration-500 rounded-full hp-glow" style="width:100%"></div>
@@ -154,8 +149,7 @@
   </header>
   <main class="flex-1 relative overflow-hidden bg-black flex flex-col"><!-- MAIN MENU -->
    <div id="scene-menu" class="absolute inset-0 z-40 flex flex-col items-center justify-center text-center transition-opacity duration-700">
-    <div class="absolute inset-0 overflow-hidden">
-     <img data-template-id="hero-bg-img" class="canva-image w-full h-full object-cover opacity-40 scale-110 blur-[1px]" loading="lazy">
+    <div class="absolute inset-0 overflow-hidden"><img data-template-id="hero-bg-img" class="canva-image w-full h-full object-cover opacity-40 scale-110 blur-[1px]" loading="lazy">
      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30"></div>
     </div>
     <div class="vignette"></div>
@@ -167,7 +161,7 @@
      <h2 data-template-id="page-subtitle" class="canva-text font-['Press_Start_2P'] text-[9px] md:text-xs text-slate-300 mb-8 tracking-widest"></h2>
      <div class="vn-dialog-box p-5 md:p-6 mb-6 w-full">
       <p class="text-lg md:text-xl text-slate-300 leading-relaxed text-left">Sistem temporal diaktifkan. Tugas Anda: melompat ke tiga era krusial Nusantara, menghadapi tokoh sejarah, dan mengumpulkan artifak.<br><br>
-       Mode soal bervariasi: pilihan ganda, pilihan ganda kompleks, menjodohkan, dan mengurutkan.<br><br><span class="text-red-400">⚠ Jika energi habis, Anda terjebak selamanya.</span></p>
+       Mode soal: pilihan ganda, pilihan ganda kompleks, menjodohkan, dan mengurutkan. Total 30 soal!<br><br><span class="text-red-400">⚠ Jika energi habis, Anda terjebak selamanya.</span></p>
      </div><button data-template-id="start-button" onclick="engine.startGame()" class="canva-button w-full font-['Press_Start_2P'] text-xs md:text-sm py-4 rounded-lg shadow-lg hover:brightness-110 active:translate-y-1 transition-all border border-amber-400/30"></button>
     </div>
    </div><!-- VN SCENE -->
@@ -184,14 +178,12 @@
      </div>
     </div>
     <div class="absolute top-3 right-3 z-40">
-     <div class="bg-black/70 border border-amber-500/30 px-3 py-2 rounded-lg backdrop-blur-sm">
-      <span class="font-['Press_Start_2P'] text-[7px] text-amber-400/70 block mb-0.5">ERA</span><span id="vn-era-text" class="text-base md:text-lg text-white">-</span>
+     <div class="bg-black/70 border border-amber-500/30 px-3 py-2 rounded-lg backdrop-blur-sm"><span class="font-['Press_Start_2P'] text-[7px] text-amber-400/70 block mb-0.5">ERA</span> <span id="vn-era-text" class="text-base md:text-lg text-white">-</span>
      </div>
     </div>
     <div class="absolute bottom-0 w-full p-2 md:p-4 z-40">
      <div class="max-w-4xl mx-auto w-full relative">
-      <div id="vn-name-plate" class="vn-name-plate absolute -top-4 left-4 md:left-6 px-4 py-1 z-50">
-       <span id="vn-name" class="font-['Press_Start_2P'] text-[8px] md:text-[10px] text-white tracking-wider">NPC</span>
+      <div id="vn-name-plate" class="vn-name-plate absolute -top-4 left-4 md:left-6 px-4 py-1 z-50"><span id="vn-name" class="font-['Press_Start_2P'] text-[8px] md:text-[10px] text-white tracking-wider">NPC</span>
       </div>
       <div id="vn-dialog-box" class="vn-dialog-box w-full min-h-[130px] md:min-h-[150px] p-4 md:p-6 pt-7 md:pt-8 flex flex-col justify-between cursor-pointer" onclick="engine.nextDialog()">
        <p id="vn-text" class="text-xl md:text-2xl text-slate-100 leading-relaxed tracking-wide"></p>
@@ -209,8 +201,7 @@
     <div class="relative z-10 flex flex-col items-center max-w-md w-full">
      <h2 id="end-title" data-template-id="end-title-text" class="canva-text font-['Press_Start_2P'] text-xl md:text-3xl text-white mb-6 leading-relaxed"></h2>
      <div class="vn-dialog-box p-6 w-full mb-6">
-      <div class="flex flex-col items-center mb-4 border-b border-slate-700/50 pb-4">
-       <span class="text-base text-slate-500 mb-1">SISA ENERGI</span><span id="end-hp" class="font-['Press_Start_2P'] text-3xl text-emerald-400">100</span>
+      <div class="flex flex-col items-center mb-4 border-b border-slate-700/50 pb-4"><span class="text-base text-slate-500 mb-1">SISA ENERGI</span> <span id="end-hp" class="font-['Press_Start_2P'] text-3xl text-emerald-400">100</span>
       </div><span class="text-base text-slate-500 mb-3 block">ARTIFAK</span>
       <div id="end-artifacts" class="flex justify-center gap-4 mb-4"></div>
       <p id="end-msg" data-template-id="end-msg-text" class="canva-text text-lg leading-relaxed text-amber-200 bg-black/40 p-3 rounded border border-amber-600/20"></p>
@@ -220,155 +211,61 @@
   </main>
   <script src="/_sdk/editing_sdk.js"></script>
   <script>
-        // --- AUDIO ENGINE (Web Audio API - no Tone.js) ---
+        // --- AUDIO ENGINE ---
         const audio = {
-            ctx: null,
-            musicGain: null,
-            sfxGain: null,
-            musicPlaying: false,
-            muted: false,
-            musicNodes: [],
-
+            ctx: null, musicGain: null, sfxGain: null, musicPlaying: false, muted: false, musicNodes: [],
             init() {
                 if (this.ctx) return;
                 this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                this.musicGain = this.ctx.createGain();
-                this.musicGain.gain.value = 0.12;
-                this.musicGain.connect(this.ctx.destination);
-                this.sfxGain = this.ctx.createGain();
-                this.sfxGain.gain.value = 0.15;
-                this.sfxGain.connect(this.ctx.destination);
+                this.musicGain = this.ctx.createGain(); this.musicGain.gain.value = 0.12; this.musicGain.connect(this.ctx.destination);
+                this.sfxGain = this.ctx.createGain(); this.sfxGain.gain.value = 0.15; this.sfxGain.connect(this.ctx.destination);
             },
-
-            // Gamelan-inspired pentatonic background music
             startMusic() {
-                if (this.musicPlaying) return;
-                this.musicPlaying = true;
-                // Pelog-like scale frequencies
+                if (this.musicPlaying) return; this.musicPlaying = true;
                 const scale = [261.6, 293.7, 327.0, 392.0, 440.0, 523.3, 587.3, 654.0];
                 const playNote = () => {
-                    if (!this.musicPlaying || this.muted) {
-                        setTimeout(playNote, 800);
-                        return;
-                    }
+                    if (!this.musicPlaying || this.muted) { setTimeout(playNote, 800); return; }
                     const freq = scale[Math.floor(Math.random() * scale.length)];
-                    const osc = this.ctx.createOscillator();
-                    const gain = this.ctx.createGain();
-                    // Use sine wave for soft gamelan bell tone
-                    osc.type = 'sine';
-                    osc.frequency.value = freq;
+                    const osc = this.ctx.createOscillator(); const gain = this.ctx.createGain();
+                    osc.type = 'sine'; osc.frequency.value = freq;
                     gain.gain.setValueAtTime(0, this.ctx.currentTime);
                     gain.gain.linearRampToValueAtTime(0.3, this.ctx.currentTime + 0.05);
                     gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 1.8);
-                    osc.connect(gain);
-                    gain.connect(this.musicGain);
-                    osc.start();
-                    osc.stop(this.ctx.currentTime + 2);
-                    // Occasional harmony
+                    osc.connect(gain); gain.connect(this.musicGain); osc.start(); osc.stop(this.ctx.currentTime + 2);
                     if (Math.random() > 0.6) {
-                        const osc2 = this.ctx.createOscillator();
-                        const gain2 = this.ctx.createGain();
-                        osc2.type = 'sine';
-                        osc2.frequency.value = freq * 1.5;
-                        gain2.gain.setValueAtTime(0, this.ctx.currentTime);
-                        gain2.gain.linearRampToValueAtTime(0.1, this.ctx.currentTime + 0.1);
+                        const osc2 = this.ctx.createOscillator(); const gain2 = this.ctx.createGain();
+                        osc2.type = 'sine'; osc2.frequency.value = freq * 1.5;
+                        gain2.gain.setValueAtTime(0, this.ctx.currentTime); gain2.gain.linearRampToValueAtTime(0.1, this.ctx.currentTime + 0.1);
                         gain2.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 1.5);
-                        osc2.connect(gain2);
-                        gain2.connect(this.musicGain);
-                        osc2.start(this.ctx.currentTime + 0.1);
-                        osc2.stop(this.ctx.currentTime + 1.8);
+                        osc2.connect(gain2); gain2.connect(this.musicGain); osc2.start(this.ctx.currentTime + 0.1); osc2.stop(this.ctx.currentTime + 1.8);
                     }
-                    const delay = 600 + Math.random() * 1200;
-                    setTimeout(playNote, delay);
+                    setTimeout(playNote, 600 + Math.random() * 1200);
                 };
                 playNote();
-                // Low drone
-                const drone = this.ctx.createOscillator();
-                const droneGain = this.ctx.createGain();
-                drone.type = 'sine';
-                drone.frequency.value = 130.8;
-                droneGain.gain.value = 0.06;
-                drone.connect(droneGain);
-                droneGain.connect(this.musicGain);
-                drone.start();
+                const drone = this.ctx.createOscillator(); const droneGain = this.ctx.createGain();
+                drone.type = 'sine'; drone.frequency.value = 130.8; droneGain.gain.value = 0.06;
+                drone.connect(droneGain); droneGain.connect(this.musicGain); drone.start();
                 this.musicNodes.push({ osc: drone, gain: droneGain });
             },
-
-            stopMusic() {
-                this.musicPlaying = false;
-                this.musicNodes.forEach(n => { try { n.osc.stop(); } catch(e){} });
-                this.musicNodes = [];
-            },
-
+            stopMusic() { this.musicPlaying = false; this.musicNodes.forEach(n => { try { n.osc.stop(); } catch(e){} }); this.musicNodes = []; },
             toggleMute() {
                 this.muted = !this.muted;
                 if (this.musicGain) this.musicGain.gain.value = this.muted ? 0 : 0.12;
                 if (this.sfxGain) this.sfxGain.gain.value = this.muted ? 0 : 0.15;
                 document.querySelector('#music-toggle i').className = this.muted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-volume-high';
             },
-
             playSfx(type) {
                 if (!this.ctx || this.muted) return;
                 const now = this.ctx.currentTime;
-                if (type === 'click') {
-                    const osc = this.ctx.createOscillator();
-                    const g = this.ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.value = 800;
-                    g.gain.setValueAtTime(0.2, now);
-                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-                    osc.connect(g); g.connect(this.sfxGain);
-                    osc.start(); osc.stop(now + 0.1);
-                } else if (type === 'correct') {
-                    [523, 659, 784].forEach((f, i) => {
-                        const osc = this.ctx.createOscillator();
-                        const g = this.ctx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.value = f;
-                        g.gain.setValueAtTime(0, now + i * 0.1);
-                        g.gain.linearRampToValueAtTime(0.25, now + i * 0.1 + 0.02);
-                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.4);
-                        osc.connect(g); g.connect(this.sfxGain);
-                        osc.start(now + i * 0.1); osc.stop(now + i * 0.1 + 0.5);
-                    });
-                } else if (type === 'wrong') {
-                    const osc = this.ctx.createOscillator();
-                    const g = this.ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.value = 180;
-                    g.gain.setValueAtTime(0.2, now);
-                    g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-                    osc.connect(g); g.connect(this.sfxGain);
-                    osc.start(); osc.stop(now + 0.35);
-                } else if (type === 'reward') {
-                    [659, 784, 988, 1175].forEach((f, i) => {
-                        const osc = this.ctx.createOscillator();
-                        const g = this.ctx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.value = f;
-                        g.gain.setValueAtTime(0, now + i * 0.12);
-                        g.gain.linearRampToValueAtTime(0.2, now + i * 0.12 + 0.03);
-                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.6);
-                        osc.connect(g); g.connect(this.sfxGain);
-                        osc.start(now + i * 0.12); osc.stop(now + i * 0.12 + 0.7);
-                    });
-                } else if (type === 'start') {
-                    [392, 523, 659].forEach((f, i) => {
-                        const osc = this.ctx.createOscillator();
-                        const g = this.ctx.createGain();
-                        osc.type = 'sine';
-                        osc.frequency.value = f;
-                        g.gain.setValueAtTime(0, now + i * 0.15);
-                        g.gain.linearRampToValueAtTime(0.25, now + i * 0.15 + 0.03);
-                        g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.15 + 0.5);
-                        osc.connect(g); g.connect(this.sfxGain);
-                        osc.start(now + i * 0.15); osc.stop(now + i * 0.15 + 0.6);
-                    });
-                }
+                if (type === 'click') { const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type='sine';o.frequency.value=800;g.gain.setValueAtTime(0.2,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.08);o.connect(g);g.connect(this.sfxGain);o.start();o.stop(now+0.1); }
+                else if (type === 'correct') { [523,659,784].forEach((f,i)=>{const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,now+i*0.1);g.gain.linearRampToValueAtTime(0.25,now+i*0.1+0.02);g.gain.exponentialRampToValueAtTime(0.001,now+i*0.1+0.4);o.connect(g);g.connect(this.sfxGain);o.start(now+i*0.1);o.stop(now+i*0.1+0.5);}); }
+                else if (type === 'wrong') { const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type='sine';o.frequency.value=180;g.gain.setValueAtTime(0.2,now);g.gain.exponentialRampToValueAtTime(0.001,now+0.3);o.connect(g);g.connect(this.sfxGain);o.start();o.stop(now+0.35); }
+                else if (type === 'reward') { [659,784,988,1175].forEach((f,i)=>{const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,now+i*0.12);g.gain.linearRampToValueAtTime(0.2,now+i*0.12+0.03);g.gain.exponentialRampToValueAtTime(0.001,now+i*0.12+0.6);o.connect(g);g.connect(this.sfxGain);o.start(now+i*0.12);o.stop(now+i*0.12+0.7);}); }
+                else if (type === 'start') { [392,523,659].forEach((f,i)=>{const o=this.ctx.createOscillator(),g=this.ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,now+i*0.15);g.gain.linearRampToValueAtTime(0.25,now+i*0.15+0.03);g.gain.exponentialRampToValueAtTime(0.001,now+i*0.15+0.5);o.connect(g);g.connect(this.sfxGain);o.start(now+i*0.15);o.stop(now+i*0.15+0.6);}); }
             }
         };
 
-        // --- STORY DATA ---
+        // --- STORY DATA (MAXIMIZED QUESTIONS) ---
         const vnData = [
             {
                 id:"ch1", bgIdx:0, npcIdx:0, eraText:"Selat Malaka, Abad ke-8",
@@ -376,32 +273,58 @@
                 nodes:[
                     {type:'dialog',text:"Pengembara, kau muncul dari udara kosong. Jubahmu aneh, tapi auramu tidak berniat jahat."},
                     {type:'dialog',text:"Aku I-Tsing. Aku singgah di Fo-Shih (Sriwijaya) untuk menerjemahkan naskah Buddha sebelum ke India."},
-                    {type:'dialog',text:"Lihatlah bandar ini. Ribuan kapal berlabuh. Tahukah kau mengapa Sriwijaya bisa semegah ini?"},
-                    {type:'question',mode:'single',text:"Mengapa Sriwijaya menjadi kerajaan maritim terbesar?",options:[
+                    {type:'question',mode:'single',text:"Mengapa Sriwijaya menjadi kerajaan maritim terbesar di Asia Tenggara?",options:[
                         {text:"Teknologi mesin uap canggih",correct:false,response:"Mesin uap? Di abad ke-8? Fokuslah!"},
-                        {text:"Lokasi strategis di Selat Malaka",correct:true,response:"Tepat. Selat Malaka adalah urat nadi dunia."},
-                        {text:"Luas daratan yang sangat besar",correct:false,response:"Mereka penguasa lautan, bukan benua."}
+                        {text:"Lokasi strategis di Selat Malaka",correct:true,response:"Tepat. Selat Malaka adalah urat nadi perdagangan dunia."},
+                        {text:"Luas daratan yang sangat besar",correct:false,response:"Mereka penguasa lautan, bukan benua."},
+                        {text:"Bantuan militer dari Tiongkok",correct:false,response:"Sriwijaya berdiri mandiri tanpa bantuan militer asing."}
                     ]},
-                    {type:'dialog',text:"Sriwijaya memonopoli komoditas berharga dari seluruh kepulauan ini."},
-                    {type:'question',mode:'complex',text:"Pilih SEMUA komoditas utama Sriwijaya:",options:[
+                    {type:'question',mode:'single',text:"Apa nama prasasti tertua yang mencatat keberadaan Sriwijaya?",options:[
+                        {text:"Prasasti Canggal",correct:false,response:"Itu prasasti dari Mataram Kuno, bukan Sriwijaya."},
+                        {text:"Prasasti Kedukan Bukit",correct:true,response:"Benar! Bertarikh 682 M, ditemukan di Palembang."},
+                        {text:"Prasasti Kalasan",correct:false,response:"Prasasti Kalasan terkait dengan Sailendra."},
+                        {text:"Prasasti Tugu",correct:false,response:"Prasasti Tugu milik kerajaan Tarumanegara."}
+                    ]},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA komoditas utama perdagangan Sriwijaya:",options:[
                         {text:"Rempah-rempah",correct:true},
                         {text:"Kapur barus",correct:true},
                         {text:"Emas",correct:true},
+                        {text:"Gading gajah",correct:true},
                         {text:"Baja industri",correct:false},
                         {text:"Kain wool",correct:false}
-                    ],responseCorrect:"Benar! Tiga komoditas itu adalah emas hijau yang diburu pedagang!",responseWrong:"Perhatikan lagi. Komoditas abad ke-8 bukan industri modern."},
-                    {type:'dialog',text:"Prasasti Kedukan Bukit mencatat perjalanan suci Dapunta Hyang."},
+                    ],responseCorrect:"Benar! Komoditas itu menjadikan Sriwijaya sangat kaya!",responseWrong:"Perhatikan lagi. Komoditas abad ke-8 bukan industri modern."},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA pusat pembelajaran Buddha yang ada di Sriwijaya:",options:[
+                        {text:"Universitas Nalanda cabang",correct:true},
+                        {text:"Vihara besar Palembang",correct:true},
+                        {text:"Perpustakaan naskah Pali",correct:true},
+                        {text:"Madrasah Al-Azhar",correct:false},
+                        {text:"Akademi Konfusius",correct:false}
+                    ],responseCorrect:"Tepat! Sriwijaya adalah pusat studi Buddha terbesar di Asia Tenggara.",responseWrong:"Sriwijaya adalah pusat Buddha, bukan agama/filosofi lain."},
                     {type:'question',mode:'order',text:"Urutkan tahapan ekspansi Sriwijaya:",items:[
                         {text:"Dapunta Hyang berangkat dengan 20.000 prajurit",order:1},
                         {text:"Menaklukkan wilayah sekitar Musi",order:2},
                         {text:"Mendirikan wanua (negeri) baru",order:3},
-                        {text:"Menguasai jalur perdagangan selat",order:4}
+                        {text:"Menguasai jalur perdagangan selat",order:4},
+                        {text:"Menjadi pusat pembelajaran internasional",order:5}
                     ],responseCorrect:"Sempurna! Kau memahami kronologi ekspansi Sriwijaya.",responseWrong:"Urutannya belum tepat. Pelajari lagi Prasasti Kedukan Bukit."},
                     {type:'question',mode:'match',text:"Jodohkan istilah Sriwijaya dengan artinya:",pairs:[
                         {left:"Fo-Shih",right:"Nama Tiongkok untuk Sriwijaya"},
                         {left:"Kedukan Bukit",right:"Prasasti tertua Sriwijaya"},
-                        {left:"Minanga Tamwan",right:"Pertemuan dua sungai"}
+                        {left:"Minanga Tamwan",right:"Pertemuan dua sungai"},
+                        {left:"Dapunta Hyang",right:"Raja pendiri Sriwijaya"}
                     ],responseCorrect:"Sempurna! Kau menguasai terminologi Sriwijaya.",responseWrong:"Ada yang belum cocok. Perhatikan konteks setiap istilah."},
+                    {type:'question',mode:'single',text:"Siapa musuh utama Sriwijaya yang akhirnya menghancurkannya?",options:[
+                        {text:"Kerajaan Majapahit",correct:false,response:"Majapahit memang menyerang, tapi bukan penghancur utama."},
+                        {text:"Kerajaan Chola dari India Selatan",correct:true,response:"Benar! Serangan Rajendra Chola tahun 1025 M sangat melemahkan Sriwijaya."},
+                        {text:"Kerajaan Khmer",correct:false,response:"Khmer fokus di daratan, bukan maritim."},
+                        {text:"Dinasti Song Tiongkok",correct:false,response:"Song adalah mitra dagang, bukan musuh."}
+                    ]},
+                    {type:'question',mode:'single',text:"Bahasa apa yang digunakan dalam prasasti-prasasti Sriwijaya?",options:[
+                        {text:"Bahasa Jawa Kuno",correct:false,response:"Jawa Kuno dipakai di Mataram, bukan Sriwijaya."},
+                        {text:"Bahasa Melayu Kuno",correct:true,response:"Tepat! Prasasti Sriwijaya ditulis dalam Melayu Kuno dengan aksara Pallawa."},
+                        {text:"Bahasa Sansekerta murni",correct:false,response:"Ada pengaruh Sansekerta, tapi bahasa utamanya Melayu Kuno."},
+                        {text:"Bahasa Tamil",correct:false,response:"Tamil digunakan pedagang India, bukan prasasti resmi Sriwijaya."}
+                    ]},
                     {type:'dialog',text:"Kau layak melangkah lebih jauh. Terimalah miniatur kapal Jong ini."},
                     {type:'reward',artifact:{icon:"fa-ship",name:"Miniatur Jong",color:"text-sky-400"}}
                 ]
@@ -414,29 +337,63 @@
                     {type:'dialog',text:"Datang dari masa depan? Saat ini kami mengatur siasat. Perang besar baru pecah."},
                     {type:'question',mode:'single',text:"Apa pemicu utama Perang Diponegoro?",options:[
                         {text:"Kenaikan pajak tanah rakyat",correct:false,response:"Itu penderitaan lama. Ada penghinaan besar lainnya."},
-                        {text:"Patok jalan melintasi makam leluhur",correct:true,response:"Benar! Kehormatan leluhur tak bisa dibeli."},
-                        {text:"Penangkapan kerabat keraton",correct:false,response:"Bukan pemicu utamanya."}
+                        {text:"Patok jalan melintasi makam leluhur",correct:true,response:"Benar! Kehormatan leluhur tak bisa dibeli dengan jalan raya."},
+                        {text:"Penangkapan kerabat keraton",correct:false,response:"Bukan pemicu utamanya."},
+                        {text:"Pelarangan agama Islam",correct:false,response:"Belanda tidak melarang Islam secara langsung saat itu."}
                     ]},
-                    {type:'dialog',text:"Taktik gerilya kami merepotkan Jenderal De Kock. Namun Londo itu licik."},
-                    {type:'question',mode:'complex',text:"Pilih SEMUA elemen Benteng Stelsel De Kock:",options:[
+                    {type:'question',mode:'single',text:"Berapa lama Perang Diponegoro berlangsung?",options:[
+                        {text:"3 tahun (1825-1828)",correct:false,response:"Lebih lama dari itu."},
+                        {text:"5 tahun (1825-1830)",correct:true,response:"Benar! Lima tahun perlawanan gigih."},
+                        {text:"10 tahun (1825-1835)",correct:false,response:"Terlalu lama. Diponegoro ditangkap tahun 1830."},
+                        {text:"2 tahun (1825-1827)",correct:false,response:"Perang ini jauh lebih panjang."}
+                    ]},
+                    {type:'question',mode:'single',text:"Di mana Diponegoro akhirnya ditangkap Belanda?",options:[
+                        {text:"Gua Selarong",correct:false,response:"Gua Selarong adalah markas awal, bukan tempat penangkapan."},
+                        {text:"Magelang, dalam perundingan palsu",correct:true,response:"Benar! Belanda melanggar gencatan senjata saat perundingan."},
+                        {text:"Yogyakarta",correct:false,response:"Diponegoro sudah lama meninggalkan Yogya saat ditangkap."},
+                        {text:"Semarang",correct:false,response:"Bukan di Semarang."}
+                    ]},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA elemen strategi Benteng Stelsel:",options:[
                         {text:"Benteng kecil di tiap wilayah",correct:true},
                         {text:"Jalan penghubung antar benteng",correct:true},
                         {text:"Pengepungan bertahap",correct:true},
+                        {text:"Memutus jalur logistik gerilya",correct:true},
                         {text:"Serangan udara dengan balon",correct:false},
                         {text:"Peracunan sumber air",correct:false}
-                    ],responseCorrect:"Benar! Tiga elemen itu mempersempit ruang gerak kami.",responseWrong:"Pikirkan strategi militer abad ke-19, bukan teknologi modern."},
+                    ],responseCorrect:"Benar! Empat elemen itu mempersempit ruang gerak kami.",responseWrong:"Pikirkan strategi militer abad ke-19, bukan teknologi modern."},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA dampak Perang Diponegoro bagi Belanda:",options:[
+                        {text:"200.000 korban jiwa di pihak pribumi",correct:true},
+                        {text:"Kerugian finansial besar",correct:true},
+                        {text:"Memicu penerapan Cultuurstelsel",correct:true},
+                        {text:"Belanda mundur dari Jawa",correct:false},
+                        {text:"Pengakuan kemerdekaan Jawa",correct:false}
+                    ],responseCorrect:"Tepat! Perang ini sangat merugikan Belanda dan memicu eksploitasi Cultuurstelsel.",responseWrong:"Belanda tidak mundur, mereka justru memperketat cengkeraman."},
                     {type:'question',mode:'match',text:"Jodohkan tokoh dengan perannya:",pairs:[
                         {left:"Sentot Alibasya",right:"Panglima kavaleri andalan"},
                         {left:"Kiai Mojo",right:"Penasihat spiritual"},
-                        {left:"De Kock",right:"Jenderal Belanda penggagas Stelsel"}
+                        {left:"De Kock",right:"Jenderal penggagas Stelsel"},
+                        {left:"Mangkubumi",right:"Pendukung dari keraton"}
                     ],responseCorrect:"Tepat! Kau mengenal pemain-pemain kunci perang ini.",responseWrong:"Periksa lagi. Setiap tokoh punya peran spesifik."},
                     {type:'question',mode:'order',text:"Urutkan fase Perang Diponegoro:",items:[
                         {text:"Pemasangan patok di Tegalrejo",order:1},
                         {text:"Diponegoro angkat senjata",order:2},
                         {text:"Perang gerilya berhasil 3 tahun",order:3},
                         {text:"Benteng Stelsel diterapkan",order:4},
-                        {text:"Diponegoro ditangkap lewat tipu daya",order:5}
+                        {text:"Sentot Alibasya membelot",order:5},
+                        {text:"Diponegoro ditangkap lewat tipu daya",order:6}
                     ],responseCorrect:"Sempurna! Kau memahami kronologi perang ini.",responseWrong:"Urutan belum tepat. Ingat alur eskalasi konflik."},
+                    {type:'question',mode:'single',text:"Ke mana Diponegoro diasingkan setelah ditangkap?",options:[
+                        {text:"Makassar (Ujung Pandang)",correct:true,response:"Benar! Beliau diasingkan dan wafat di Fort Rotterdam, Makassar."},
+                        {text:"Banda Neira",correct:false,response:"Banda Neira tempat pengasingan lain, tapi bukan untuk Diponegoro."},
+                        {text:"Belanda",correct:false,response:"Diponegoro tidak dibawa ke Eropa."},
+                        {text:"Surabaya",correct:false,response:"Bukan Surabaya."}
+                    ]},
+                    {type:'question',mode:'single',text:"Gelar apa yang disandang Diponegoro saat memimpin perang?",options:[
+                        {text:"Sultan Hamengkubuwono",correct:false,response:"Itu gelar sultan Yogyakarta yang berkuasa."},
+                        {text:"Pangeran",correct:false,response:"Pangeran adalah gelar kelahiran, bukan gelar perangnya."},
+                        {text:"Erucakra / Ratu Adil",correct:true,response:"Benar! Pengikutnya meyakini beliau sebagai Ratu Adil yang dijanjikan."},
+                        {text:"Sunan",correct:false,response:"Gelar Sunan untuk pemuka agama, bukan pemimpin perang."}
+                    ]},
                     {type:'dialog',text:"Bawalah Keris Kiai Omyang ini. Perlawanan sejati lahir dari rakyat."},
                     {type:'reward',artifact:{icon:"fa-khanda",name:"Keris Kiai Omyang",color:"text-slate-200"}}
                 ]
@@ -448,31 +405,64 @@
                     {type:'dialog',text:"Ssst... jangan berisik. Di luar ada patroli Gunseikanbu. Malam ini sangat krusial."},
                     {type:'dialog',text:"Kami baru dari Rengasdengklok. Para pemuda sangat berapi-api."},
                     {type:'question',mode:'single',text:"Apa tujuan peristiwa Rengasdengklok?",options:[
-                        {text:"Mengamankan Soekarno-Hatta agar memproklamasi",correct:true,response:"Benar. Golongan muda takut kami masih menunggu."},
+                        {text:"Mengamankan Soekarno-Hatta agar segera memproklamasi",correct:true,response:"Benar. Golongan muda takut kami masih menunggu."},
                         {text:"Menyusun strategi perang lawan Sekutu",correct:false,response:"Jepang sudah menyerah. Fokus kami: merdeka."},
-                        {text:"Menyembunyikan teks proklamasi dari Jepang",correct:false,response:"Teksnya bahkan belum dibuat saat itu!"}
+                        {text:"Menyembunyikan teks proklamasi dari Jepang",correct:false,response:"Teksnya bahkan belum dibuat saat itu!"},
+                        {text:"Mengadakan rapat BPUPKI darurat",correct:false,response:"BPUPKI sudah dibubarkan sebelum peristiwa ini."}
                     ]},
-                    {type:'dialog',text:"Kini di rumah Laksamana Maeda. Teks harus segera dirumuskan sebelum fajar."},
+                    {type:'question',mode:'single',text:"Siapa yang menjemput Soekarno-Hatta dari Rengasdengklok?",options:[
+                        {text:"Ahmad Soebardjo",correct:true,response:"Benar! Soebardjo menjemput atas perantaraan Maeda."},
+                        {text:"Wikana",correct:false,response:"Wikana adalah golongan muda yang mendesak, bukan penjemput."},
+                        {text:"Sayuti Melik",correct:false,response:"Sayuti bertugas mengetik naskah, bukan menjemput."},
+                        {text:"Fatmawati",correct:false,response:"Fatmawati menunggu di Jakarta."}
+                    ]},
+                    {type:'question',mode:'single',text:"Kapan tepatnya teks Proklamasi dirumuskan?",options:[
+                        {text:"Malam 16 Agustus 1945",correct:true,response:"Benar! Dini hari sebelum fajar di rumah Laksamana Maeda."},
+                        {text:"Siang 15 Agustus 1945",correct:false,response:"Tanggal 15 adalah hari Jepang menyerah, belum ada perumusan."},
+                        {text:"Pagi 17 Agustus 1945",correct:false,response:"Pagi itu sudah pembacaan, bukan perumusan."},
+                        {text:"14 Agustus 1945",correct:false,response:"Terlalu awal. Peristiwa belum bergulir."}
+                    ]},
                     {type:'question',mode:'complex',text:"Pilih SEMUA tokoh perumus teks Proklamasi:",options:[
                         {text:"Soekarno",correct:true},
                         {text:"Hatta",correct:true},
                         {text:"Achmad Soebardjo",correct:true},
                         {text:"Sayuti Melik",correct:false},
-                        {text:"Fatmawati",correct:false}
-                    ],responseCorrect:"Benar! Kami bertiga merumuskan di ruang belakang rumah Maeda.",responseWrong:"Sayuti pengetik dan Fatmawati penjahit bendera, bukan perumus teks."},
+                        {text:"Fatmawati",correct:false},
+                        {text:"Sukarni",correct:false}
+                    ],responseCorrect:"Benar! Kami bertiga merumuskan di ruang belakang rumah Maeda.",responseWrong:"Sayuti pengetik, Fatmawati penjahit bendera, Sukarni pengusul — bukan perumus."},
+                    {type:'question',mode:'complex',text:"Pilih SEMUA perubahan yang dilakukan Sayuti Melik saat mengetik naskah:",options:[
+                        {text:"Mengubah 'tempoh' menjadi 'tempo'",correct:true},
+                        {text:"Menambah 'atas nama bangsa Indonesia'",correct:true},
+                        {text:"Mengubah ejaan 'Ra'jat' menjadi 'Rakjat'",correct:false},
+                        {text:"Menghapus tanggal proklamasi",correct:false}
+                    ],responseCorrect:"Tepat! Perubahan ejaan dan penambahan frase itu sangat penting.",responseWrong:"Perhatikan perbedaan naskah tulisan tangan dan ketikan."},
                     {type:'question',mode:'order',text:"Urutkan peristiwa menjelang proklamasi:",items:[
-                        {text:"Jepang menyerah tanpa syarat",order:1},
+                        {text:"Jepang menyerah tanpa syarat (15 Ags)",order:1},
                         {text:"Pemuda membawa Soekarno-Hatta ke Rengasdengklok",order:2},
-                        {text:"Perumusan teks di rumah Maeda",order:3},
-                        {text:"Sayuti Melik mengetik naskah final",order:4},
-                        {text:"Pembacaan proklamasi di Pegangsaan Timur",order:5}
+                        {text:"Ahmad Soebardjo menjemput kembali ke Jakarta",order:3},
+                        {text:"Perumusan teks di rumah Maeda",order:4},
+                        {text:"Sayuti Melik mengetik naskah final",order:5},
+                        {text:"Pembacaan proklamasi di Pegangsaan Timur 56",order:6}
                     ],responseCorrect:"Sempurna! Kau memahami detik-detik kemerdekaan.",responseWrong:"Urutan belum tepat. Ingat kronologi 14-17 Agustus 1945."},
                     {type:'question',mode:'match',text:"Jodohkan tokoh dengan kontribusinya:",pairs:[
                         {left:"Sayuti Melik",right:"Mengetik naskah proklamasi"},
                         {left:"Fatmawati",right:"Menjahit bendera Merah Putih"},
                         {left:"Laksamana Maeda",right:"Menyediakan rumah untuk perumusan"},
-                        {left:"Sukarni",right:"Mengusulkan penandatanganan atas nama bangsa"}
+                        {left:"Sukarni",right:"Mengusulkan tanda tangan atas nama bangsa"},
+                        {left:"Wikana",right:"Mendesak proklamasi segera"}
                     ],responseCorrect:"Tepat! Setiap orang punya peran vital malam itu.",responseWrong:"Periksa lagi peran setiap tokoh pada malam 16 Agustus."},
+                    {type:'question',mode:'single',text:"Di mana tepatnya Proklamasi dibacakan?",options:[
+                        {text:"Jl. Pegangsaan Timur 56, Jakarta",correct:true,response:"Benar! Kediaman Soekarno saat itu."},
+                        {text:"Lapangan Ikada, Jakarta",correct:false,response:"Ikada adalah rapat akbar 19 September, bukan proklamasi."},
+                        {text:"Rumah Laksamana Maeda",correct:false,response:"Di sana perumusan, bukan pembacaan."},
+                        {text:"Istana Merdeka",correct:false,response:"Istana masih dikuasai Jepang saat itu."}
+                    ]},
+                    {type:'question',mode:'single',text:"Pukul berapa Proklamasi Kemerdekaan dibacakan?",options:[
+                        {text:"Pukul 10.00 pagi",correct:true,response:"Benar! 17 Agustus 1945 pukul 10.00 WIB."},
+                        {text:"Pukul 08.00 pagi",correct:false,response:"Masih terlalu pagi, persiapan belum selesai."},
+                        {text:"Pukul 12.00 siang",correct:false,response:"Sudah terlalu siang."},
+                        {text:"Pukul 06.00 subuh",correct:false,response:"Subuh? Teks baru selesai diketik dini hari."}
+                    ]},
                     {type:'dialog',text:"Fajar hampir tiba. Bawalah gulungan Proklamasi ini ke masamu. Merdeka!"},
                     {type:'reward',artifact:{icon:"fa-scroll",name:"Teks Proklamasi",color:"text-amber-200"}}
                 ]
@@ -589,7 +579,6 @@
 
             renderQuestion(node){
                 const c=document.getElementById('vn-choices');c.innerHTML='';c.classList.remove('hidden');c.classList.add('flex');
-
                 if(node.mode==='single') this.renderSingle(node,c);
                 else if(node.mode==='complex') this.renderComplex(node,c);
                 else if(node.mode==='order') this.renderOrder(node,c);
@@ -601,7 +590,7 @@
                     const b=document.createElement('button');
                     b.className='choice-btn w-full text-left text-lg md:text-xl p-3 md:p-4 rounded-lg text-slate-200 flex items-center gap-3';
                     b.innerHTML=`<span class="text-amber-500 font-bold">►</span><span>${opt.text}</span>`;
-                    b.onclick=(e)=>{e.stopPropagation();c.classList.add('hidden');c.classList.remove('flex');this.handleAnswer(opt.correct,opt.correct?opt.response:opt.response);};
+                    b.onclick=(e)=>{e.stopPropagation();c.classList.add('hidden');c.classList.remove('flex');this.handleAnswer(opt.correct,opt.response);};
                     c.appendChild(b);
                 });
             },
@@ -634,21 +623,18 @@
 
             renderOrder(node,c){
                 let items=[...node.items];
-                // Shuffle
                 for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]];}
-
                 const list=document.createElement('div');list.className='flex flex-col gap-2 w-full';
                 items.forEach((item,idx)=>{
                     const el=document.createElement('div');
                     el.className='order-item w-full text-left text-lg md:text-xl p-3 md:p-4 rounded-lg text-slate-200 flex items-center gap-3';
                     el.dataset.order=item.order;
-                    el.innerHTML=`<span class="text-amber-500 font-bold shrink-0 w-6">${idx+1}.</span><span>${item.text}</span><span class="ml-auto flex gap-1"><button class="move-up px-2 py-1 bg-slate-700 rounded text-sm">▲</button><button class="move-down px-2 py-1 bg-slate-700 rounded text-sm">▼</button></span>`;
+                    el.innerHTML=`<span class="text-amber-500 font-bold shrink-0 w-6">${idx+1}.</span><span class="flex-1">${item.text}</span><span class="ml-auto flex gap-1"><button class="move-up px-2 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">▲</button><button class="move-down px-2 py-1 bg-slate-700 rounded text-sm hover:bg-slate-600">▼</button></span>`;
                     el.querySelector('.move-up').onclick=(e)=>{e.stopPropagation();const prev=el.previousElementSibling;if(prev)list.insertBefore(el,prev);this.updateOrderNumbers(list);};
                     el.querySelector('.move-down').onclick=(e)=>{e.stopPropagation();const next=el.nextElementSibling;if(next)list.insertBefore(next,el);this.updateOrderNumbers(list);};
                     list.appendChild(el);
                 });
                 c.appendChild(list);
-
                 const submit=document.createElement('button');
                 submit.className='submit-btn w-full text-center text-lg p-3 rounded-lg text-white font-bold mt-2';
                 submit.textContent='KONFIRMASI URUTAN';
@@ -670,9 +656,7 @@
                 const pairs=node.pairs;
                 let shuffledRight=[...pairs].sort(()=>Math.random()-0.5);
                 const matchState={selectedLeft:null,matches:new Map()};
-
                 const grid=document.createElement('div');grid.className='grid grid-cols-2 gap-2 w-full';
-
                 const leftCol=document.createElement('div');leftCol.className='flex flex-col gap-2';
                 const rightCol=document.createElement('div');rightCol.className='flex flex-col gap-2';
 
@@ -689,7 +673,7 @@
                     leftCol.appendChild(lb);
                 });
 
-                shuffledRight.forEach((p,i)=>{
+                shuffledRight.forEach((p)=>{
                     const rb=document.createElement('button');
                     rb.className='match-right text-left text-base md:text-lg p-2 md:p-3 rounded-lg text-slate-200';
                     rb.textContent=p.right;rb.dataset.origIdx=pairs.indexOf(p);
@@ -700,12 +684,10 @@
                         const leftIdx=matchState.selectedLeft;
                         const rightOrigIdx=parseInt(rb.dataset.origIdx);
                         matchState.matches.set(leftIdx,rightOrigIdx);
-                        // Visual feedback
                         const lb=leftCol.querySelector(`[data-idx="${leftIdx}"]`);
                         lb.classList.add('matched');lb.classList.remove('active');
                         rb.classList.add('matched');
                         matchState.selectedLeft=null;
-                        // Auto-submit when all matched
                         if(matchState.matches.size===pairs.length){
                             setTimeout(()=>{
                                 const isCorrect=[...matchState.matches.entries()].every(([l,r])=>l===r);
@@ -719,8 +701,6 @@
 
                 grid.appendChild(leftCol);grid.appendChild(rightCol);
                 c.appendChild(grid);
-
-                // Manual submit for partial
                 const info=document.createElement('p');info.className='text-sm text-slate-400 mt-2 text-center';info.textContent='Pilih kiri lalu kanan untuk menjodohkan';
                 c.appendChild(info);
             },
@@ -732,9 +712,9 @@
                     audio.playSfx('correct');db.style.borderColor='#22c55e';
                     this.typeText(response,()=>{this.state.waitingForClick=true;ci.classList.remove('hidden');this.state.nodeIdx++;});
                 } else {
-                    audio.playSfx('wrong');db.style.borderColor='#ef4444';this.takeDamage(20);
+                    audio.playSfx('wrong');db.style.borderColor='#ef4444';this.takeDamage(15);
                     if(this.state.hp<=0){this.typeText("Energi habis... Realitas memudar...",()=>{setTimeout(()=>this.gameOver(),1500)});}
-                    else this.typeText(response+" [Energi -20. Klik untuk coba lagi]",()=>{this.state.waitingForClick=true;ci.classList.remove('hidden');});
+                    else this.typeText(response+" [Energi -15. Klik untuk coba lagi]",()=>{this.state.waitingForClick=true;ci.classList.remove('hidden');});
                 }
             },
 
@@ -768,7 +748,7 @@
                 document.getElementById('status-panel').classList.add('hidden');
                 document.getElementById('end-hp').innerText=this.state.hp+'%';
                 const rank=this.state.hp>=80?"LEGENDA WAKTU":this.state.hp>=50?"AHLI SEJARAH":"PENJELAJAH WAKTU";
-                document.getElementById('end-msg').innerText=`Lompatan sukses! Pangkat: ${rank}. Artifak sejarah aman.`;
+                document.getElementById('end-msg').innerText=`Lompatan sukses! Pangkat: ${rank}. Semua artifak sejarah aman.`;
                 this.renderEndArtifacts();
             },
 
@@ -787,5 +767,5 @@
             if(l)l.style.transform=`translate(${x}px,${y}px) scale(1.08)`;
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f0e1c6048ae416',t:'MTc4MjAyMjU2MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0f15f7241f77a69',t:'MTc4MjAyNzcwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
