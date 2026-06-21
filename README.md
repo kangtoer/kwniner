@@ -1,27 +1,222 @@
-🕰️ Kapsul Waktu: Nusantara Chronicles
-Game edukasi visual novel interaktif yang membawa pemain melintasi tiga era penting sejarah Indonesia.
+# ⏳ Kapsul Waktu: Nusantara Chronicles
 
-Deskripsi
-Kapsul Waktu adalah game berbasis web yang menggabungkan format visual novel dengan kuis sejarah. Pemain berperan sebagai pengembara waktu yang harus mengumpulkan artifak dari tokoh-tokoh sejarah dengan menjawab pertanyaan dalam berbagai mode.
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?style=for-the-badge&logo=javascript)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.x-blue?style=for-the-badge&logo=tailwindcss)
+![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)
 
-Fitur
-3 Chapter — Sriwijaya (Abad ke-8), Perang Diponegoro (1825), Proklamasi (1945)
-4 Mode Soal — Pilihan ganda, pilihan ganda kompleks, menjodohkan, mengurutkan
-Musik gamelan — Latar belakang pentatonik terinspirasi pelog
-Grafis imersif — Foto latar paralaks, potret NPC, partikel atmosfer, efek vignette
-Sistem energi — Jawaban salah mengurangi energi; habis = game over
-3 Artifak — Miniatur Jong, Keris Kiai Omyang, Teks Proklamasi
-Teknologi
-HTML5 / Tailwind CSS
-Web Audio API (musik & SFX)
-Vanilla JavaScript (tanpa framework)
-Google Fonts (VT323, Press Start 2P)
-FontAwesome icons
-Pexels images
-Cara Bermain
-Klik MULAI LOMPATAN WAKTU
-Baca dialog dari NPC sejarah (klik untuk lanjut)
-Jawab soal dengan benar untuk melanjutkan
-Kumpulkan 3 artifak untuk menyelesaikan misi
-Lisensi
-Dibuat untuk keperluan edukasi sejarah Indonesia.
+## 🎮 Tentang Game
+
+**Kapsul Waktu: Nusantara Chronicles** merupakan game edukasi sejarah Indonesia berbasis **Visual Novel RPG** yang menggabungkan unsur:
+
+- 📖 Story Telling
+- 🎭 Visual Novel
+- 🧩 Quiz Interaktif
+- ⚔️ RPG Adventure
+- 🎵 Background Music
+- 🏆 Achievement System
+
+Pemain berperan sebagai seorang penjelajah waktu yang harus mengumpulkan artefak sejarah dari tiga periode penting sejarah Indonesia.
+
+---
+
+# 🌏 Petualangan Sejarah
+
+## 1. Kerajaan Sriwijaya
+- I-Tsing
+- Jalur perdagangan
+- Prasasti Kedukan Bukit
+- Kerajaan Maritim
+
+## 2. Perang Diponegoro
+- Gua Selarong
+- Benteng Stelsel
+- Pangeran Diponegoro
+- Strategi Gerilya
+
+## 3. Proklamasi Kemerdekaan
+- Rengasdengklok
+- Rumah Laksamana Maeda
+- Proklamasi 17 Agustus 1945
+- Tokoh Kemerdekaan
+
+---
+
+# ✨ Fitur
+
+✅ Visual Novel Interface
+
+✅ Animated Dialogue
+
+✅ Typewriter Effect
+
+✅ Background Music (Web Audio API)
+
+✅ Sound Effect
+
+✅ HP System
+
+✅ Artifact Collection
+
+✅ 30 Soal HOTS
+
+✅ Pilihan Ganda
+
+✅ Pilihan Ganda Kompleks
+
+✅ Menjodohkan
+
+✅ Mengurutkan
+
+✅ Sistem Ranking
+
+✅ Ending Berdasarkan Nilai
+
+---
+
+# 🎯 Jenis Soal
+
+- Single Choice
+- Multiple Choice
+- Matching
+- Ordering
+
+---
+
+# 🏅 Sistem Permainan
+
+Player memiliki:
+
+❤️ Energy
+
+Jika jawaban salah:
+
+- Energy berkurang
+- Efek layar merah
+- Animasi shake
+
+Jika Energy habis:
+
+Game Over
+
+Jika berhasil menyelesaikan semua chapter:
+
+🏆 Legend of Time
+
+---
+
+# 🏺 Artefak
+
+Selama permainan pemain akan memperoleh:
+
+🚢 Miniatur Kapal Jong
+
+🗡 Keris Kiai Omyang
+
+📜 Naskah Proklamasi
+
+---
+
+# 💻 Teknologi
+
+- HTML5
+- CSS3
+- TailwindCSS
+- Vanilla JavaScript
+- Web Audio API
+- FontAwesome
+- Google Fonts
+
+---
+
+# 📂 Struktur Project
+
+```
+project/
+│
+├── index.html
+├── assets/
+│
+├── images/
+├── audio/
+├── css/
+└── js/
+```
+
+---
+
+# 🚀 Cara Menjalankan
+
+Clone repository
+
+```bash
+git clone https://github.com/username/kapsul-waktu.git
+```
+
+Masuk folder
+
+```bash
+cd kapsul-waktu
+```
+
+Buka
+
+```
+index.html
+```
+
+menggunakan browser modern.
+
+Tidak memerlukan instalasi.
+
+---
+
+# 🎓 Tujuan Pembelajaran
+
+Game ini dirancang untuk membantu siswa memahami:
+
+- Kerajaan Sriwijaya
+- Perang Diponegoro
+- Proklamasi Kemerdekaan
+- Tokoh Nasional
+- Kronologi Sejarah
+- Analisis Peristiwa
+- Hubungan Sebab Akibat
+
+dengan pendekatan **gamifikasi pembelajaran**.
+
+---
+
+# 📸 Preview
+
+![preview](preview.png)
+
+---
+
+# 📖 Pengembangan Selanjutnya
+
+- Save Progress
+- Leaderboard
+- Multiplayer
+- Voice Over
+- Achievement
+- Responsive Mobile
+- AI NPC
+- Database Score
+- Export Sertifikat
+
+---
+
+# 📜 License
+
+MIT License
+
+---
+
+# 👨‍🏫 Author
+
+Dikembangkan sebagai media pembelajaran sejarah Indonesia berbasis gamifikasi.
+
+Semoga bermanfaat bagi guru, siswa, dan pecinta sejarah Nusantara.
+
+⭐ Jangan lupa berikan **Star** apabila repository ini bermanfaat.
